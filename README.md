@@ -12,6 +12,7 @@ Brooks Burt - Biology Major, Junior
 Liam Stott - 
 Connor Vucovich - 
 
+
 ## Project Information
 *Write a few sentences about your project. This can be done later, as you
 may not quite know all the details yet.*
