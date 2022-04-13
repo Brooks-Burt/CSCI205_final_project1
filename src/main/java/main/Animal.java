@@ -18,5 +18,9 @@
  */
 package main;
 
+/**
+ * A simple class to encapsulate an animal object within the simulation
+ */
 public class Animal {
+
 }
