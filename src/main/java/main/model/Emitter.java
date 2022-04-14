@@ -76,12 +76,12 @@ public class Emitter {
      * Initialize the set of particles that will be emitted from this emitter
      */
     private void initParticles() {
-        while (listOfParticles.size() < this.numParticles){
-            double durationInSec = rng.nextDouble() * MAX_DURATION;
-            double xDeltaPerSec = rng.nextDouble() * MAX_VELOCITY_PER_SEC + -(MAX_VELOCITY_PER_SEC / 2);
-            double yDeltaPerSec = rng.nextDouble() * MAX_VELOCITY_PER_SEC + -(MAX_VELOCITY_PER_SEC / 2);
-            Particle p = new Particle(this.x, this.y, durationInSec, xDeltaPerSec, yDeltaPerSec, Color.AQUA);
-            listOfParticles.add(p);
+        while (listOfParticles.size() < this.numParticles){ //while the list of particles < current particles emitted
+            double durationInSec = rng.nextDouble() * MAX_DURATION; // duration is 5 * random number
+            double xDeltaPerSec = rng.nextDouble() * MAX_VELOCITY_PER_SEC + -(MAX_VELOCITY_PER_SEC / 2); // direction in x direction rng * 100 - 50
+            double yDeltaPerSec = rng.nextDouble() * MAX_VELOCITY_PER_SEC + -(MAX_VELOCITY_PER_SEC / 2); // direction in y direction rng * 100 - 50
+            Particle p = new Particle(this.x, this.y, durationInSec, xDeltaPerSec, yDeltaPerSec, Color.AQUA); //construct particle
+            listOfParticles.add(p); //add particle to list
         }
     }
 

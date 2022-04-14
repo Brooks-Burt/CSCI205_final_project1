@@ -8,13 +8,12 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-
-<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Particlesim">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.ParticleSystemController">
    <children>
       <Canvas fx:id="canvas" height="600.0" layoutX="180.0" layoutY="65.0" width="650.0" AnchorPane.leftAnchor="150.0" />
       <VBox layoutX="14.0" layoutY="93.0" prefHeight="200.0" prefWidth="150.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <CheckBox fx:id="checkBoxContinuous" mnemonicParsing="false" text="Continuos">
+            <CheckBox fx:id="checkBoxContinuous" mnemonicParsing="false" text="Continuous">
                <padding>
                   <Insets bottom="10.0" left="10.0" top="20.0" />
                </padding>
