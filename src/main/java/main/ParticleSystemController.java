@@ -113,6 +113,13 @@ public class ParticleSystemController {
 
             // Start animationTimer
             this.animationTimer.start();
+
+            this.btnStop.setOnAction(a -> this.theModel.emitterStream().forEach(e -> e.particleStream()
+                    .forEach(p -> {
+                                p.pause();
+                            }
+                    )
+            ));
         });
     }
 
