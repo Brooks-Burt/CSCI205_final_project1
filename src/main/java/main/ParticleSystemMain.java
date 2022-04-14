@@ -32,13 +32,13 @@ public class ParticleSystemMain extends Application {
     private ParticleSystemController theController;
     private ParticleSystemModel theModel;
 
-
     public static void main(String[] args) {
         launch(args);
     }
 
     @Override
     public void start(Stage primaryStage) throws IOException {
+        this.theModel = new ParticleSystemModel();
 
         // Load in the FXML file. Obtain the root node of the scene graph
         FXMLLoader loader = new FXMLLoader();
@@ -47,7 +47,7 @@ public class ParticleSystemMain extends Application {
         this.theController = loader.getController();
         this.theController.setModel(theModel);
 
-        // Set up the stage
+        // Set up our stage
         primaryStage.setTitle("Particle Simulator");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();

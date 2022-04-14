@@ -27,6 +27,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.paint.Color;
 import main.model.ParticleSystemModel;
 
 public class ParticleSystemController {
@@ -90,8 +91,9 @@ public class ParticleSystemController {
         this.theModel = theModel;
 
         // Generate a new random emitter
-        this.btnGenerate.setOnAction(event -> this.theModel.generateRandomEmitter((int)this.canvas.getWidth(),(int)this.canvas.getHeight()));
-
+        this.btnGenerate.setOnAction(event -> {
+            this.theModel.generateRandomEmitter((int)this.canvas.getWidth(),(int)this.canvas.getHeight());
+        });
 
         // Set the start button handler
         this.btnStart.setOnAction(event -> {
@@ -130,16 +132,24 @@ public class ParticleSystemController {
                 GraphicsContext gc = ParticleSystemController.this.gc;
                 ParticleSystemModel theModel = ParticleSystemController.this.theModel;
 
+                // Clear the background every update
+                gc.setFill(Color.BLACK);
+                gc.fillRect(0,0,
+                        ParticleSystemController.this.canvas.getWidth(),
+                        ParticleSystemController.this.canvas.getHeight());
+
                 // Now, go through every particle of every emitter and draw an updated oval based
                 // on its current position
                 theModel.emitterStream()
                         .forEach(e -> e.particleStream()
                                 .forEach(p -> {
                                             gc.setFill(p.getColor());
-                                            gc.fillOval(p.getX(), p.getY(), 3, 3);
+                                            gc.fillOval(p.getX(), p.getY(), 10, 10);
                                         }
                                 )
                         );
+
+
             }
         });
 
