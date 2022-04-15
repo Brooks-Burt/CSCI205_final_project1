@@ -18,8 +18,9 @@
  */
 package main;
 
-import java.awt.*;
 import java.util.Random;
+
+
 
 /**
  * A simple class to encapsulate an animal object within the simulation
@@ -70,7 +71,7 @@ public class Animal {
      * This method acts on an animal object and randomly adjust its locations values based on some random
      * number scaled by its overall speed value
      */
-    public static void Randmove(Animal animal) {
+    public void randMove(Animal animal) {
         Random rand = new Random();
         System.out.println(animal.getAnimalLocX() + ", " + animal.getAnimalLocY());
         int randomIntX = rand.nextInt(3) - 1;
@@ -84,6 +85,12 @@ public class Animal {
         if (animal.getEnergy() <= 0) {
             AnimalDies(animal);
         }
+    }
+
+    public void Move() {
+        Random rand = new Random();
+        System.out.println(this.getAnimalLocX() + ", " + this.getAnimalLocY());
+        animalLocX = animalLocX + 0;
     }
 
     public void SnartMove() {
@@ -117,10 +124,10 @@ public class Animal {
 
     public static void main(String[] args) {
         Animal fish = new Animal(2, 0.5, 50.0, 50.0);
-        Randmove(fish);
-        Randmove(fish);
-        Randmove(fish);
-        Randmove(fish);
+//        randMove(fish);
+//        randMove(fish);
+//        randMove(fish);
+//        randMove(fish);
         AnimalDies(fish);
     }
 }
