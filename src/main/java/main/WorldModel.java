@@ -44,19 +44,25 @@ public class WorldModel {
      * @param maxHeight - maximum y-coordinate to allow
      */
 
-    public void generateAnimal(int maxWidth, int maxHeight) {
-        int x = rng.nextInt(maxWidth);
-        int y = rng.nextInt(maxHeight);
+    public Animal generateAnimal(int maxWidth, int maxHeight) {
+        System.out.println("Generate Animal");
+        double x = (double) rng.nextInt(maxWidth);
+        double y = (double) rng.nextInt(maxHeight);
+        Animal animal = new Animal(1, .5, x,y);
+        return animal;
+    }
+
+    public void addNewAnimal( double x, double y) {
+        Animal animal = new Animal(1, .5, x,y);
 
     }
 
-    public void addNewAnimal() {
-        Animal animal = new Animal(4, .5, 0.0,0.0);
 
-        while (animal.getEnergy() != 0) {
-            animal.randMove(animal);
+    public void run(Animal animal) throws InterruptedException {
+            animal.Move();
+            System.out.println(animal.getAnimalLocX() + ", " + animal.getAnimalLocY());
+            Thread.sleep(50);
 
-        }
     }
 
 

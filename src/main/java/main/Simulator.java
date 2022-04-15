@@ -27,8 +27,8 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class Simulator extends Application {
-//    private World theWorld;
-//    private WorldModel theWorldModel;
+    private World theWorld;
+    private WorldModel theWorldModel;
 
     public static void main(String[] args) {
         launch(args);
@@ -36,14 +36,14 @@ public class Simulator extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-        //this.theWorldModel = new WorldModel();
+        this.theWorldModel = new WorldModel();
 
         // Load in the FXML file. Obtain the root node of the scene graph
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/world.fxml"));
         Parent root = loader.load();
-//        this.theWorld = loader.getController();
-//        this.theWorld.setModel(theWorldModel);
+        this.theWorld = loader.getController();
+        this.theWorld.setModel(theWorldModel);
 
         // Set up our stage
         primaryStage.setTitle("Animal Simulator");

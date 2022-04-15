@@ -45,12 +45,12 @@ public class Animal {
     /**
      * Double value that holds the X location of the animal within space
      */
-    private Double animalLocX;
+    private double animalLocX;
 
     /**
      * Double value that holds the Y locations of the animal within space
      */
-    private Double animalLocY;
+    private double animalLocY;
 
     /**
      * Constructor for the Animal class that assigns the attributes of the animal
@@ -90,7 +90,10 @@ public class Animal {
     public void Move() {
         Random rand = new Random();
         System.out.println(this.getAnimalLocX() + ", " + this.getAnimalLocY());
-        animalLocX = animalLocX + 0;
+        double randomIntX = (double) rand.nextInt(3) - 1;
+        double randomIntY = (double) rand.nextInt(3) - 1;
+        animalLocX = animalLocX + randomIntX;
+        animalLocY = animalLocY + randomIntY;
     }
 
     public void SnartMove() {
@@ -102,11 +105,11 @@ public class Animal {
         return animal;
     }
 
-    public Double getAnimalLocX() {
+    public double getAnimalLocX() {
         return animalLocX;
     }
 
-    public Double getAnimalLocY() {
+    public double getAnimalLocY() {
         return animalLocY;
     }
 

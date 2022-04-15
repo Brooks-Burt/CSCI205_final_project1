@@ -21,9 +21,21 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import main.model.ParticleSystemModel;
 
 public class World {
+
+    /**
+     * A reference to the model this controller must work with
+     */
+    private WorldModel theModel;
+
+    /**
+     * The Graphics Context of the canvas
+     */
+    private GraphicsContext gc;
 
     @FXML
     private ResourceBundle resources;
@@ -42,7 +54,34 @@ public class World {
         assert btnStart != null : "fx:id=\"btnStart\" was not injected: check your FXML file 'world.fxml'.";
         assert canvas != null : "fx:id=\"canvas\" was not injected: check your FXML file 'world.fxml'.";
 
+        this.gc = canvas.getGraphicsContext2D();
+
     }
+
+    public void setModel(WorldModel theModel) {
+        this.theModel = theModel;
+
+
+        this.btnStart.setOnAction(event -> {
+            System.out.println("Press Button");
+            Animal animal = this.theModel.generateAnimal((int)this.canvas.getWidth(),(int)this.canvas.getHeight());
+            System.out.println(animal.getAnimalLocX() + ", " + animal.getAnimalLocY());
+            try {
+//                while (animal.getEnergy() != 0)
+                    gc.fillOval(animal.getAnimalLocX(), animal.getAnimalLocY(), 30, 30);
+                    this.theModel.run(animal);
+
+
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        });
+
+
+    }
+
+
+
 
 
 
