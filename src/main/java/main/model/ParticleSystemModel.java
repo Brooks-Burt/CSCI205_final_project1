@@ -28,7 +28,7 @@ public class ParticleSystemModel {
     /**
      * Default number of particles for each emitter if not specified
      */
-    public static final int DEF_NUM_PARTICLES = 200;
+    public static final int DEF_NUM_PARTICLES = 1;
 
     /**
      * A shared random number generator
@@ -98,10 +98,6 @@ public class ParticleSystemModel {
     public void stopAndReset() {
         emitterStream().forEach(emitter -> emitter.stopAndReset());
     }
-
-
-
-
 
 
 

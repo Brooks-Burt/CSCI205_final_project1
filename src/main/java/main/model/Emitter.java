@@ -19,6 +19,7 @@
 package main.model;
 
 import javafx.scene.paint.Color;
+import javafx.util.Duration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +37,8 @@ public class Emitter {
      * Maximum duration in seconds
      */
     private static final double MAX_DURATION = 5.00;
+
+    //private static final double MAX_DURATION = Duration.INDEFINITE.toMillis();
 
     /**
      * Particles will be emitted in a random direction from the source
@@ -78,6 +81,7 @@ public class Emitter {
     private void initParticles() {
         while (listOfParticles.size() < this.numParticles){ //while the list of particles < current particles emitted
             double durationInSec = rng.nextDouble() * MAX_DURATION; // duration is 5 * random number
+            //double durationInSec = Duration.INDEFINITE.toMillis();
             double xDeltaPerSec = rng.nextDouble() * MAX_VELOCITY_PER_SEC + -(MAX_VELOCITY_PER_SEC / 2); // direction in x direction rng * 100 - 50
             double yDeltaPerSec = rng.nextDouble() * MAX_VELOCITY_PER_SEC + -(MAX_VELOCITY_PER_SEC / 2); // direction in y direction rng * 100 - 50
             Particle p = new Particle(this.x, this.y, durationInSec, xDeltaPerSec, yDeltaPerSec, Color.AQUA); //construct particle
