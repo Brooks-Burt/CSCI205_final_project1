@@ -19,4 +19,7 @@
 package main;
 
 public class Predator extends Animal{
+    public Predator(Integer speedVal, Double reproductionRateVal, Double animalLocXVal, Double animalLocYVal) {
+        super(speedVal, reproductionRateVal, animalLocXVal, animalLocYVal);
+    }
 }
