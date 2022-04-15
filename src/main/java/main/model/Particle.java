@@ -18,6 +18,7 @@
  *****************************************/
 package main.model;
 
+import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -71,13 +72,19 @@ public class Particle {
     private void initTimeline(double startX, double startY, double duration,
                               double xDeltaPerSec, double yDeltaPerSec){
         this.timeline = new Timeline(
-                new KeyFrame(Duration.ZERO, new KeyValue(x, startX),
+                new KeyFrame(Duration.INDEFINITE, new KeyValue(x, startX),
                         new KeyValue(y, startY)),
                 new KeyFrame(Duration.seconds(duration),
                         new KeyValue(x, startX + (xDeltaPerSec * duration)),
                         new KeyValue(y, startY + (yDeltaPerSec * duration)))
 
         );
+        this.timeline.setCycleCount(Timeline.INDEFINITE);
+
+        /*this.timeline = new Timeline(
+                new KeyFrame(Duration.ZERO, new KeyValue(x, startX),
+                        new KeyValue(y, startY))
+        );*/
     }
 
     /**
