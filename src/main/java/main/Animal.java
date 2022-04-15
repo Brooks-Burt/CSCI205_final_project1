@@ -60,7 +60,7 @@ public class Animal {
      */
     public Animal(Integer speedVal, Double reproductionRateVal, Double animalLocXVal, Double animalLocYVal) {
         this.speed = speedVal;
-        this.energy = 1000;
+        this.energy = 50;
         this.reproductionRate = reproductionRateVal;
         this.animalLocX = animalLocXVal;
         this.animalLocY = animalLocYVal;
@@ -70,21 +70,29 @@ public class Animal {
      * This method acts on an animal object and randomly adjust its locations values based on some random
      * number scaled by its overall speed value
      */
-    public void Randmove() {
+    public static void Randmove(Animal animal) {
         Random rand = new Random();
-        System.out.println(getAnimalLocX() + ", " + getAnimalLocY());
+        System.out.println(animal.getAnimalLocX() + ", " + animal.getAnimalLocY());
         int randomIntX = rand.nextInt(3) - 1;
         int randomIntY = rand.nextInt(3) - 1;
-        animalLocX = getAnimalLocX() + (getSpeed()*randomIntX);
-        animalLocY = getAnimalLocY() + (getSpeed()*randomIntY);
+        animal.animalLocX = animal.getAnimalLocX() + (animal.getSpeed()*randomIntX);
+        animal.animalLocY = animal.getAnimalLocY() + (animal.getSpeed()*randomIntY);
         System.out.println(randomIntX + ", " + randomIntY);
-        System.out.println(getAnimalLocX() + ", " + getAnimalLocY());
-        energy = getEnergy() - (Integer) ((getSpeed()*randomIntX) + (getSpeed()*randomIntY));
-        System.out.println(getEnergy());
+        System.out.println(animal.getAnimalLocX() + ", " + animal.getAnimalLocY());
+        animal.energy = animal.getEnergy() - (Integer) (Math.abs(animal.getSpeed()*randomIntX) + Math.abs(animal.getSpeed()*randomIntY));
+        System.out.println(animal.getEnergy());
+        if (animal.getEnergy() <= 0) {
+            AnimalDies(animal);
+        }
     }
 
     public void SnartMove() {
         //TODO: Define Smarter movement method based off of machine learning techniques
+    }
+
+    public static Animal AnimalDies(Animal animal) {
+        animal = null;
+        return animal;
     }
 
     public Double getAnimalLocX() {
@@ -109,9 +117,10 @@ public class Animal {
 
     public static void main(String[] args) {
         Animal fish = new Animal(2, 0.5, 50.0, 50.0);
-        fish.Randmove();
-        fish.Randmove();
-        fish.Randmove();
-        fish.Randmove();
+        Randmove(fish);
+        Randmove(fish);
+        Randmove(fish);
+        Randmove(fish);
+        AnimalDies(fish);
     }
 }
