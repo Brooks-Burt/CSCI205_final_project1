@@ -64,25 +64,40 @@ public class World {
 
         this.btnStart.setOnAction(event -> {
             System.out.println("Press Button");
-            Animal animal = this.theModel.generateAnimal((int)this.canvas.getWidth(),(int)this.canvas.getHeight());
-            System.out.println(animal.getAnimalLocX() + ", " + animal.getAnimalLocY());
-            try {
-//                while (animal.getEnergy() != 0)
-                    gc.fillOval(animal.getAnimalLocX(), animal.getAnimalLocY(), 30, 30);
-                    this.theModel.run(animal);
 
-
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            for (int i = 0; i < 3; i++) {
+                WorldThread WorldT = new WorldThread();
+                Thread thread = new Thread((Runnable) WorldT);
+                thread.start();
             }
-        });
 
+            //Animal animal = this.theModel.generateAnimal((int)this.canvas.getWidth(),(int)this.canvas.getHeight());
+            //System.out.println(animal.getAnimalLocX() + ", " + animal.getAnimalLocY());
+            //while (animal.getEnergy() != 0)
+            //gc.fillOval(animal.getAnimalLocX(), animal.getAnimalLocY(), 30, 30);
+            //this.theModel.run();
+        });
 
     }
 
-
-
-
-
-
+    private class WorldThread implements Runnable {
+        @Override
+        public void run() {
+            try {
+                Animal threadAnimal = theModel.generateAnimal((int) canvas.getWidth(), (int) canvas.getHeight());
+                System.out.println(threadAnimal.getEnergy());
+                //while (threadAnimal.getEnergy() > 0) {
+                    gc.fillOval(threadAnimal.getAnimalLocX(), threadAnimal.getAnimalLocY(), 30, 30);
+                    threadAnimal.Move();
+                    //System.out.println(threadAnimal.getEnergy());
+                    Thread.sleep(50);
+                    //gc.fillOval(threadAnimal.getAnimalLocX(), threadAnimal.getAnimalLocY(), 30, 30);
+                //}
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }
+
+

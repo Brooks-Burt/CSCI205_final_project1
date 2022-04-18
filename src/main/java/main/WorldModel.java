@@ -19,9 +19,6 @@
 
 package main;
 
-import main.model.Emitter;
-import main.Animal;
-import java.util.List;
 import java.util.Random;
 
 public class WorldModel {
@@ -34,7 +31,7 @@ public class WorldModel {
     /**
      * A shared random number generator
      */
-    private final Random rng = new Random();
+    private static final Random rng = new Random();
 
 
 
@@ -43,8 +40,7 @@ public class WorldModel {
      * @param maxWidth - maximum x-coordinate to allow
      * @param maxHeight - maximum y-coordinate to allow
      */
-
-    public Animal generateAnimal(int maxWidth, int maxHeight) {
+    public static Animal generateAnimal(int maxWidth, int maxHeight) {
         System.out.println("Generate Animal");
         double x = (double) rng.nextInt(maxWidth);
         double y = (double) rng.nextInt(maxHeight);
@@ -58,12 +54,16 @@ public class WorldModel {
     }
 
 
+    /**
     public void run(Animal animal) throws InterruptedException {
             animal.Move();
             System.out.println(animal.getAnimalLocX() + ", " + animal.getAnimalLocY());
             Thread.sleep(50);
-
     }
+    */
+
+    //Consider moving this method straight intothe World class so that it can be mapped inside of the run method
+    //erasing the prior issues scene in the code
 
 
 }

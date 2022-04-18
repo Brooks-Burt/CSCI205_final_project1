@@ -40,7 +40,7 @@ public class Animal {
     /**
      * Integer representation of the energy of the animal
      */
-    private Integer energy;
+    private double energy;
 
     /**
      * Double value that holds the X location of the animal within space
@@ -94,6 +94,7 @@ public class Animal {
         double randomIntY = (double) rand.nextInt(3) - 1;
         animalLocX = animalLocX + randomIntX;
         animalLocY = animalLocY + randomIntY;
+        this.energy = this.getEnergy() - (Math.abs(this.getSpeed()*randomIntX) + Math.abs(this.getSpeed()*randomIntY));
     }
 
     public void SnartMove() {
@@ -117,7 +118,7 @@ public class Animal {
         return reproductionRate;
     }
 
-    public Integer getEnergy() {
+    public double getEnergy() {
         return energy;
     }
 
