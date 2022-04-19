@@ -65,10 +65,29 @@ public class World {
         this.btnStart.setOnAction(event -> {
             System.out.println("Press Button");
 
-            for (int i = 0; i < 3; i++) {
+            /*for (int i = 0; i < 3; i++) {
                 WorldThread WorldT = new WorldThread();
                 Thread thread = new Thread((Runnable) WorldT);
                 thread.start();
+            }*/
+            Animal animal = this.theModel.generateAnimal((int) this.canvas.getWidth(), (int)this.canvas.getHeight());
+            System.out.println(animal.getAnimalLocX() + ", " + animal.getAnimalLocY());
+            while (true){
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+
+
+                //gc.clearRect(0, 0, canvas.getWidth(),canvas.getHeight() );
+                animal.Move();
+                System.out.println(animal.getAnimalLocX() + ", " + animal.getAnimalLocY());
+                gc.fillOval(animal.getAnimalLocX(), animal.getAnimalLocY(), 10, 10);
+
+
+
             }
 
             //Animal animal = this.theModel.generateAnimal((int)this.canvas.getWidth(),(int)this.canvas.getHeight());
