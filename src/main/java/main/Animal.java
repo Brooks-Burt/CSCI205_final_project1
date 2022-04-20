@@ -65,7 +65,7 @@ public class Animal implements  Runnable{
      */
     public Animal(Integer speedVal, Double reproductionRateVal, Double animalLocXVal, Double animalLocYVal) {
         this.speed = speedVal;
-        this.energy = 50;
+        this.energy = 500;
         this.reproductionRate = reproductionRateVal;
         this.animalLocX = animalLocXVal;
         this.animalLocY = animalLocYVal;
@@ -91,11 +91,19 @@ public class Animal implements  Runnable{
         }
     }
 
-    public void Move() {
+    public void Move(int width, int height) {
         Random rand = new Random();
         System.out.println(this.getAnimalLocX() + ", " + this.getAnimalLocY());
         double randomIntX = (double) rand.nextInt(3) - 1;
         double randomIntY = (double) rand.nextInt(3) - 1;
+        if ((this.getAnimalLocX() + (randomIntX*speed)) < 0 || (this.getAnimalLocX() + (randomIntX*speed)) > width) {
+            //System.out.println("runs");
+            randomIntX = -1*randomIntX;
+        }
+        if ((this.getAnimalLocY() + (randomIntY*speed)) < 0 || (this.getAnimalLocY() + (randomIntY*speed)) > height) {
+            //System.out.println("runs");
+            randomIntY = -1*randomIntY;
+        }
         animalLocX = animalLocX + randomIntX * speed;
         animalLocY = animalLocY + randomIntY * speed;
         this.energy = this.getEnergy() - (Math.abs(this.getSpeed()*randomIntX) + Math.abs(this.getSpeed()*randomIntY));
@@ -144,13 +152,13 @@ public class Animal implements  Runnable{
     @Override
     public void run() {
         gc.fillOval(this.getAnimalLocX(), this.getAnimalLocY(), 30, 30);
-        while (true) {
+        while (this.getEnergy() > 0) {
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            this.Move();
+            this.Move((int) canvas.getWidth(), (int) canvas.getHeight());
             gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight() );
             gc.fillOval(this.getAnimalLocX(), this.getAnimalLocY(), 30, 30);
 

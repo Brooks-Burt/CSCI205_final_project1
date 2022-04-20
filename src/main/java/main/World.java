@@ -66,17 +66,13 @@ public class World {
             System.out.println("Press Button");
 
             /*for (int i = 0; i < 3; i++) {
-                WorldThread WorldT = new WorldThread();
-                Thread thread = new Thread((Runnable) WorldT);
+                Animal animal = this.theModel.generateAnimal((int) this.canvas.getWidth(), (int)this.canvas.getHeight());
+                Thread thread = new Thread(animal);
                 thread.start();
             }*/
             Animal animal = this.theModel.generateAnimal((int) this.canvas.getWidth(), (int)this.canvas.getHeight());
             Thread myThread = new Thread(animal);
             myThread.start();
-
-
-
-
 
             }
 
