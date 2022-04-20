@@ -65,7 +65,7 @@ public class Animal implements  Runnable{
      */
     public Animal(Integer speedVal, Double reproductionRateVal, Double animalLocXVal, Double animalLocYVal) {
         this.speed = speedVal;
-        this.energy = 500;
+        this.energy = 2000;
         this.reproductionRate = reproductionRateVal;
         this.animalLocX = animalLocXVal;
         this.animalLocY = animalLocYVal;
@@ -154,7 +154,7 @@ public class Animal implements  Runnable{
         gc.fillOval(this.getAnimalLocX(), this.getAnimalLocY(), 30, 30);
         while (this.getEnergy() > 0) {
             try {
-                Thread.sleep(100);
+                Thread.sleep(10);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

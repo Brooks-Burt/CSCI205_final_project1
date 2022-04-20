@@ -65,11 +65,13 @@ public class World {
         this.btnStart.setOnAction(event -> {
             System.out.println("Press Button");
 
-            /*for (int i = 0; i < 3; i++) {
+            /**
+            for (int i = 0; i < 3; i++) {
                 Animal animal = this.theModel.generateAnimal((int) this.canvas.getWidth(), (int)this.canvas.getHeight());
                 Thread thread = new Thread(animal);
                 thread.start();
-            }*/
+            }
+            **/
             Animal animal = this.theModel.generateAnimal((int) this.canvas.getWidth(), (int)this.canvas.getHeight());
             Thread myThread = new Thread(animal);
             myThread.start();
