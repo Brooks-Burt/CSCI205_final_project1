@@ -35,7 +35,7 @@ public class World {
     /**
      * The Graphics Context of the canvas
      */
-    private GraphicsContext gc;
+    public static GraphicsContext gc;
 
     @FXML
     private ResourceBundle resources;
@@ -47,7 +47,7 @@ public class World {
     private Button btnStart;
 
     @FXML
-    private Canvas canvas;
+    public Canvas canvas;
 
     @FXML
     void initialize() {
@@ -71,20 +71,10 @@ public class World {
                 thread.start();
             }*/
             Animal animal = this.theModel.generateAnimal((int) this.canvas.getWidth(), (int)this.canvas.getHeight());
-            System.out.println(animal.getAnimalLocX() + ", " + animal.getAnimalLocY());
-            while (true){
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+            Thread myThread = new Thread(animal);
+            myThread.start();
 
 
-
-                //gc.clearRect(0, 0, canvas.getWidth(),canvas.getHeight() );
-                animal.Move();
-                System.out.println(animal.getAnimalLocX() + ", " + animal.getAnimalLocY());
-                gc.fillOval(animal.getAnimalLocX(), animal.getAnimalLocY(), 10, 10);
 
 
 
@@ -95,11 +85,11 @@ public class World {
             //while (animal.getEnergy() != 0)
             //gc.fillOval(animal.getAnimalLocX(), animal.getAnimalLocY(), 30, 30);
             //this.theModel.run();
-        });
+        );
 
     }
 
-    private class WorldThread implements Runnable {
+    /*private class WorldThread implements Runnable {
         @Override
         public void run() {
             try {
@@ -116,7 +106,7 @@ public class World {
                 e.printStackTrace();
             }
         }
-    }
+    }*/
 }
 
 

@@ -18,6 +18,10 @@
  */
 package main;
 
+import javafx.fxml.FXML;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
+
 import java.util.Random;
 
 
@@ -25,7 +29,7 @@ import java.util.Random;
 /**
  * A simple class to encapsulate an animal object within the simulation
  */
-public class Animal {
+public class Animal implements  Runnable{
 
     /**
      * Integer representation of the speed of the animal
@@ -92,8 +96,8 @@ public class Animal {
         System.out.println(this.getAnimalLocX() + ", " + this.getAnimalLocY());
         double randomIntX = (double) rand.nextInt(3) - 1;
         double randomIntY = (double) rand.nextInt(3) - 1;
-        animalLocX = animalLocX + randomIntX;
-        animalLocY = animalLocY + randomIntY;
+        animalLocX = animalLocX + randomIntX * speed;
+        animalLocY = animalLocY + randomIntY * speed;
         this.energy = this.getEnergy() - (Math.abs(this.getSpeed()*randomIntX) + Math.abs(this.getSpeed()*randomIntY));
     }
 
@@ -133,5 +137,28 @@ public class Animal {
 //        randMove(fish);
 //        randMove(fish);
         AnimalDies(fish);
+    }
+    GraphicsContext gc = World.gc;
+    Canvas canvas = gc.getCanvas();
+
+    @Override
+    public void run() {
+        gc.fillOval(this.getAnimalLocX(), this.getAnimalLocY(), 30, 30);
+        while (true) {
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            this.Move();
+            gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight() );
+            gc.fillOval(this.getAnimalLocX(), this.getAnimalLocY(), 30, 30);
+
+
+
+
+
+
+        }
     }
 }
