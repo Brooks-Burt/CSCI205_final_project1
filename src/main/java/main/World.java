@@ -18,6 +18,8 @@
  */
 package main;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
@@ -44,6 +46,9 @@ public class World {
     private URL location;
 
     @FXML
+    private Button btnGenerate;
+
+    @FXML
     private Button btnStart;
 
     @FXML
@@ -51,6 +56,7 @@ public class World {
 
     @FXML
     void initialize() {
+        assert btnGenerate != null : "fx:id=\"btnGenerate\" was not injected: check your FXML file 'world.fxml'.";
         assert btnStart != null : "fx:id=\"btnStart\" was not injected: check your FXML file 'world.fxml'.";
         assert canvas != null : "fx:id=\"canvas\" was not injected: check your FXML file 'world.fxml'.";
 
@@ -58,34 +64,52 @@ public class World {
 
     }
 
+    public List<Animal> animals = new ArrayList<>();
+    public List<Thread> threads = new ArrayList<>();
+
     public void setModel(WorldModel theModel) {
         this.theModel = theModel;
 
 
-        this.btnStart.setOnAction(event -> {
+        this.btnGenerate.setOnAction(event -> {
             System.out.println("Press Button");
 
-            /*for (int i = 0; i < 3; i++) {
-                WorldThread WorldT = new WorldThread();
-                Thread thread = new Thread((Runnable) WorldT);
+            /**
+            for (int i = 0; i < 3; i++) {
+                Animal animal = this.theModel.generateAnimal((int) this.canvas.getWidth(), (int)this.canvas.getHeight());
+                Thread thread = new Thread(animal);
                 thread.start();
-            }*/
+            }
+            **/
             Animal animal = this.theModel.generateAnimal((int) this.canvas.getWidth(), (int)this.canvas.getHeight());
+            animals.add(animal);
             Thread myThread = new Thread(animal);
-            myThread.start();
+            threads.add(myThread);
+            //myThread.start();
+        });
 
-
-
-
+        this.btnStart.setOnAction(event -> {
+            for (Thread thread : threads){
+                thread.start();
 
             }
 
-            //Animal animal = this.theModel.generateAnimal((int)this.canvas.getWidth(),(int)this.canvas.getHeight());
-            //System.out.println(animal.getAnimalLocX() + ", " + animal.getAnimalLocY());
-            //while (animal.getEnergy() != 0)
-            //gc.fillOval(animal.getAnimalLocX(), animal.getAnimalLocY(), 30, 30);
-            //this.theModel.run();
-        );
+            gc.fillOval(animals.get(0).getAnimalLocX(), animals.get(0).getAnimalLocY(), 20, 20);
+            while (true){
+                gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+                for (Animal animal : animals){
+                    gc.fillOval(animal.getAnimalLocX(), animal.getAnimalLocY(), 20, 20);
+
+                }
+                try {
+                    Thread.sleep(15);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+
+
+        });
 
     }
 
