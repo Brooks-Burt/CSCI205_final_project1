@@ -18,5 +18,6 @@
  */
 package main;
 
-public class GenerateWorld {
+public class GenerateWorld{
+
 }

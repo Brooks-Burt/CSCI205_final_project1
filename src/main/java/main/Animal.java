@@ -151,7 +151,7 @@ public class Animal implements  Runnable{
 
     @Override
     public void run() {
-        gc.fillOval(this.getAnimalLocX(), this.getAnimalLocY(), 30, 30);
+        //gc.fillOval(this.getAnimalLocX(), this.getAnimalLocY(), 30, 30);
         while (this.getEnergy() > 0) {
             try {
                 Thread.sleep(10);
@@ -159,8 +159,8 @@ public class Animal implements  Runnable{
                 e.printStackTrace();
             }
             this.Move((int) canvas.getWidth(), (int) canvas.getHeight());
-            gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight() );
-            gc.fillOval(this.getAnimalLocX(), this.getAnimalLocY(), 30, 30);
+            //gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight() );
+            //gc.fillOval(this.getAnimalLocX(), this.getAnimalLocY(), 30, 30);
 
 
 
