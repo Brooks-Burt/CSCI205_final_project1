@@ -21,6 +21,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -66,6 +68,18 @@ public class World {
 
     public List<Animal> animals = new ArrayList<>();
     public List<Thread> threads = new ArrayList<>();
+    private Runnable UpdateWorld;
+
+    private void UpdatePositions(List<Animal> animals) {
+
+        for (Animal animal : animals){
+
+            gc.fillOval(animal.getAnimalLocX(), animal.getAnimalLocY(), 30, 30);
+
+        }
+        System.out.println("got here!");
+
+    }
 
     public void setModel(WorldModel theModel) {
         this.theModel = theModel;
@@ -85,31 +99,29 @@ public class World {
             animals.add(animal);
             Thread myThread = new Thread(animal);
             threads.add(myThread);
+
             //myThread.start();
         });
 
         this.btnStart.setOnAction(event -> {
+            Runnable theUpdater = new UpdateWorld();
+            Thread update = new Thread(theUpdater);
+
             for (Thread thread : threads){
                 thread.start();
-
             }
+            update.start();
 
-            gc.fillOval(animals.get(0).getAnimalLocX(), animals.get(0).getAnimalLocY(), 20, 20);
-            while (true){
-                gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-                for (Animal animal : animals){
-                    gc.fillOval(animal.getAnimalLocX(), animal.getAnimalLocY(), 20, 20);
-
-                }
-                try {
-                    Thread.sleep(15);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
+//            gc.fillOval(animals.get(0).getAnimalLocX(), animals.get(0).getAnimalLocY(), 20, 20);
+//            while (true){
+//                gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+//                for (Animal animal : animals){
+//                    gc.fillOval(animal.getAnimalLocX(), animal.getAnimalLocY(), 20, 20);
+//                }
 
 
-        });
+            });
+
 
     }
 
@@ -131,6 +143,34 @@ public class World {
             }
         }
     }*/
+
+    private class UpdateWorld implements Runnable{
+
+        private void UpdatePositions(List<Animal> animals) throws InterruptedException {
+            while (true) {
+                for (Animal animal : animals) {
+                    gc.fillOval(animal.getAnimalLocX(), animal.getAnimalLocY(), 20, 20);
+                    Thread.sleep(25);
+
+                }
+                gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+            }
+        }
+
+
+        @Override
+        public void run() {
+            try {
+                UpdatePositions(animals);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.println("here");
+
+        }
+    }
 }
+
+
 
 

@@ -163,10 +163,6 @@ public class Animal implements  Runnable{
             //gc.fillOval(this.getAnimalLocX(), this.getAnimalLocY(), 30, 30);
 
 
-
-
-
-
         }
     }
 }
