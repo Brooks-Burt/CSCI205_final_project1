@@ -87,20 +87,10 @@ public class World {
 
         this.btnGenerate.setOnAction(event -> {
             System.out.println("Press Button");
-
-            /**
-            for (int i = 0; i < 3; i++) {
-                Animal animal = this.theModel.generateAnimal((int) this.canvas.getWidth(), (int)this.canvas.getHeight());
-                Thread thread = new Thread(animal);
-                thread.start();
-            }
-            **/
             Animal animal = this.theModel.generateAnimal((int) this.canvas.getWidth(), (int)this.canvas.getHeight());
             animals.add(animal);
             Thread myThread = new Thread(animal);
             threads.add(myThread);
-
-            //myThread.start();
         });
 
         this.btnStart.setOnAction(event -> {
@@ -112,46 +102,26 @@ public class World {
             }
             update.start();
 
-//            gc.fillOval(animals.get(0).getAnimalLocX(), animals.get(0).getAnimalLocY(), 20, 20);
-//            while (true){
-//                gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-//                for (Animal animal : animals){
-//                    gc.fillOval(animal.getAnimalLocX(), animal.getAnimalLocY(), 20, 20);
-//                }
-
 
             });
 
 
     }
 
-    /*private class WorldThread implements Runnable {
-        @Override
-        public void run() {
-            try {
-                Animal threadAnimal = theModel.generateAnimal((int) canvas.getWidth(), (int) canvas.getHeight());
-                System.out.println(threadAnimal.getEnergy());
-                //while (threadAnimal.getEnergy() > 0) {
-                    gc.fillOval(threadAnimal.getAnimalLocX(), threadAnimal.getAnimalLocY(), 30, 30);
-                    threadAnimal.Move();
-                    //System.out.println(threadAnimal.getEnergy());
-                    Thread.sleep(50);
-                    //gc.fillOval(threadAnimal.getAnimalLocX(), threadAnimal.getAnimalLocY(), 30, 30);
-                //}
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-    }*/
-
     private class UpdateWorld implements Runnable{
 
         private void UpdatePositions(List<Animal> animals) throws InterruptedException {
-            while (true) {
+            while (animals.size() > 0) {
                 gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+                for (Animal animal : animals){
+                    if (animal.getEnergy() <= 0){
+                        animals.remove(animal);
+                    }
+                }
                 for (Animal animal : animals) {
                     gc.fillOval(animal.getAnimalLocX(), animal.getAnimalLocY(), 20, 20);
                     //Thread.sleep(25);
+
 
                 }
                 //gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());

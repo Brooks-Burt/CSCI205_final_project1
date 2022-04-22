@@ -29,7 +29,7 @@ import java.util.Random;
 /**
  * A simple class to encapsulate an animal object within the simulation
  */
-public class Animal implements  Runnable{
+public class Animal implements  Runnable {
 
     /**
      * Integer representation of the speed of the animal
@@ -65,7 +65,7 @@ public class Animal implements  Runnable{
      */
     public Animal(Integer speedVal, Double reproductionRateVal, Double animalLocXVal, Double animalLocYVal) {
         this.speed = speedVal;
-        this.energy = 2000;
+        this.energy = 3000;
         this.reproductionRate = reproductionRateVal;
         this.animalLocX = animalLocXVal;
         this.animalLocY = animalLocYVal;

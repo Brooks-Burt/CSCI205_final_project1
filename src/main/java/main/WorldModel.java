@@ -44,7 +44,7 @@ public class WorldModel {
         System.out.println("Generate Animal");
         double x = (double) rng.nextInt(maxWidth);
         double y = (double) rng.nextInt(maxHeight);
-        Animal animal = new Animal(5, .5, x,y);
+        Animal animal = new Animal(3, .5, x,y);
         return animal;
     }
 
