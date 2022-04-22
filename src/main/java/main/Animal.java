@@ -150,7 +150,7 @@ public class Animal implements  Runnable{
     Canvas canvas = gc.getCanvas();
 
     @Override
-    public void run() {
+    public synchronized void run() {
         //gc.fillOval(this.getAnimalLocX(), this.getAnimalLocY(), 30, 30);
         while (this.getEnergy() > 0) {
             try {

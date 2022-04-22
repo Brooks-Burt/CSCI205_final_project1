@@ -148,18 +148,20 @@ public class World {
 
         private void UpdatePositions(List<Animal> animals) throws InterruptedException {
             while (true) {
+                gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
                 for (Animal animal : animals) {
                     gc.fillOval(animal.getAnimalLocX(), animal.getAnimalLocY(), 20, 20);
-                    Thread.sleep(25);
+                    //Thread.sleep(25);
 
                 }
-                gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+                //gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+                Thread.sleep(10);
             }
         }
 
 
         @Override
-        public void run() {
+        public synchronized void run() {
             try {
                 UpdatePositions(animals);
             } catch (InterruptedException e) {
