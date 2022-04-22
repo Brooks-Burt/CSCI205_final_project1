@@ -27,6 +27,7 @@ import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.paint.Color;
 import main.model.ParticleSystemModel;
 
 public class World {
@@ -68,18 +69,7 @@ public class World {
 
     public List<Animal> animals = new ArrayList<>();
     public List<Thread> threads = new ArrayList<>();
-    private Runnable UpdateWorld;
 
-    private void UpdatePositions(List<Animal> animals) {
-
-        for (Animal animal : animals){
-
-            gc.fillOval(animal.getAnimalLocX(), animal.getAnimalLocY(), 30, 30);
-
-        }
-        System.out.println("got here!");
-
-    }
 
     public void setModel(WorldModel theModel) {
         this.theModel = theModel;
@@ -100,10 +90,15 @@ public class World {
             Thread myThread = new Thread(animal);
             threads.add(myThread);
 
-            //myThread.start();
+            //generate food
+
+
         });
 
         this.btnStart.setOnAction(event -> {
+            this.theModel.generateFood(5, (int)this.canvas.getWidth(), (int)this.canvas.getHeight());
+
+
             Runnable theUpdater = new UpdateWorld();
             Thread update = new Thread(theUpdater);
 
@@ -112,43 +107,28 @@ public class World {
             }
             update.start();
 
-//            gc.fillOval(animals.get(0).getAnimalLocX(), animals.get(0).getAnimalLocY(), 20, 20);
-//            while (true){
-//                gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-//                for (Animal animal : animals){
-//                    gc.fillOval(animal.getAnimalLocX(), animal.getAnimalLocY(), 20, 20);
-//                }
 
 
-            });
+
+        });
 
 
     }
 
-    /*private class WorldThread implements Runnable {
-        @Override
-        public void run() {
-            try {
-                Animal threadAnimal = theModel.generateAnimal((int) canvas.getWidth(), (int) canvas.getHeight());
-                System.out.println(threadAnimal.getEnergy());
-                //while (threadAnimal.getEnergy() > 0) {
-                    gc.fillOval(threadAnimal.getAnimalLocX(), threadAnimal.getAnimalLocY(), 30, 30);
-                    threadAnimal.Move();
-                    //System.out.println(threadAnimal.getEnergy());
-                    Thread.sleep(50);
-                    //gc.fillOval(threadAnimal.getAnimalLocX(), threadAnimal.getAnimalLocY(), 30, 30);
-                //}
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-    }*/
 
     private class UpdateWorld implements Runnable{
 
         private void UpdatePositions(List<Animal> animals) throws InterruptedException {
             while (true) {
                 gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+
+                gc.setFill(Color.GREEN);
+                for (Food food : theModel.getFoodList()) {
+
+                    gc.fillRect(food.getFoodLocX(), food.getFoodLocY(), 5, 5);
+                }
+
+                gc.setFill(Color.BLACK);
                 for (Animal animal : animals) {
                     gc.fillOval(animal.getAnimalLocX(), animal.getAnimalLocY(), 20, 20);
                     //Thread.sleep(25);

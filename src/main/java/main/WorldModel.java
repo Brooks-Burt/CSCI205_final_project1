@@ -19,6 +19,8 @@
 
 package main;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class WorldModel {
@@ -33,38 +35,43 @@ public class WorldModel {
      */
     private static final Random rng = new Random();
 
+    /**
+     * A list of food to be generated
+     */
+    private List<Food> foodList = new ArrayList<>();
 
+    public List<Food> getFoodList() {
+        return foodList;
+    }
 
     /**
      * Generate an animal at a random location
-     * @param maxWidth - maximum x-coordinate to allow
+     *
+     * @param maxWidth  - maximum x-coordinate to allow
      * @param maxHeight - maximum y-coordinate to allow
      */
     public static Animal generateAnimal(int maxWidth, int maxHeight) {
         System.out.println("Generate Animal");
         double x = (double) rng.nextInt(maxWidth);
         double y = (double) rng.nextInt(maxHeight);
-        Animal animal = new Animal(5, .5, x,y);
+        Animal animal = new Animal(5, .5, x, y);
         return animal;
     }
 
-    public void addNewAnimal( double x, double y) {
-        Animal animal = new Animal(1, .5, x,y);
+    public void addNewAnimal(double x, double y) {
+        Animal animal = new Animal(1, .5, x, y);
 
     }
 
+    public void generateFood(int num, int maxWidth, int maxHeight) {
+        Random rand = new Random();
 
-    /**
-    public void run(Animal animal) throws InterruptedException {
-            animal.Move();
-            System.out.println(animal.getAnimalLocX() + ", " + animal.getAnimalLocY());
-            Thread.sleep(50);
+        for (int x = 0; x < num; x++) {
+            int randomIntX = rand.nextInt(maxWidth);
+            int randomIntY = rand.nextInt(maxHeight);
+            Food newFood = new Food(randomIntX, randomIntY);
+            foodList.add(newFood);
+        }
     }
-    */
-
-    //Consider moving this method straight intothe World class so that it can be mapped inside of the run method
-    //erasing the prior issues scene in the code
-
-
 }
 

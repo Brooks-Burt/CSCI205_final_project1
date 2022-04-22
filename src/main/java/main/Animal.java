@@ -24,8 +24,6 @@ import javafx.scene.canvas.GraphicsContext;
 
 import java.util.Random;
 
-
-
 /**
  * A simple class to encapsulate an animal object within the simulation
  */
@@ -109,7 +107,7 @@ public class Animal implements  Runnable{
         this.energy = this.getEnergy() - (Math.abs(this.getSpeed()*randomIntX) + Math.abs(this.getSpeed()*randomIntY));
     }
 
-    public void SnartMove() {
+    public void SmartMove() {
         //TODO: Define Smarter movement method based off of machine learning techniques
     }
 
