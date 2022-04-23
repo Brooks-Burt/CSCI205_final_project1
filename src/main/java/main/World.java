@@ -111,6 +111,7 @@ public class World {
     private class UpdateWorld implements Runnable{
 
         private void UpdatePositions(List<Animal> animals) throws InterruptedException {
+            gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
             while (animals.size() > 0) {
                 gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
                 for (Animal animal : animals){
