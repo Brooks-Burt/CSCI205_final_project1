@@ -148,9 +148,10 @@ public class Animal implements  Runnable {
     GraphicsContext gc = World.gc;
     Canvas canvas = gc.getCanvas();
 
-    public void eat(List<Food> foodList) {
+    public void eat() {
+        List<Food> foodList = WorldModel.getFoodList();
         for (Food food : foodList) {
-            if (((this.getAnimalLocX() + 10) > food.getFoodLocX()) &&  ((this.getAnimalLocX() - 10) < food.getFoodLocX()) && ((this.getAnimalLocX() + 10) > food.getFoodLocY()) &&  ((this.getAnimalLocX() - 10) < food.getFoodLocY())) {
+            if (Math.abs(this.getAnimalLocY() - food.getFoodLocY()) < 20 && Math.abs(this.getAnimalLocX() - food.getFoodLocX()) < 20) {
                 this.energy += 1000;
                 foodList.remove(food);
             }
@@ -169,6 +170,7 @@ public class Animal implements  Runnable {
             this.Move((int) canvas.getWidth(), (int) canvas.getHeight());
             //gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight() );
             //gc.fillOval(this.getAnimalLocX(), this.getAnimalLocY(), 30, 30);
+            this.eat();
 
 
         }
