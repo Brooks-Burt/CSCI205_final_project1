@@ -38,14 +38,20 @@ public class WorldModel {
     /**
      * A list of food to be generated
      */
-    private List<Food> foodList = new ArrayList<>();
+    private static List<Food> foodList = new ArrayList<>();
 
-    public List<Food> getFoodList() {
+    public static List<Food> getFoodList() {
         return foodList;
     }
 
     public void setFoodList(List<Food> foodList) {
         this.foodList = foodList;
+    }
+
+    public static void removeFood(Food food){
+        if (foodList.contains(food)){
+            foodList.remove(food);
+        }
     }
 
     /**

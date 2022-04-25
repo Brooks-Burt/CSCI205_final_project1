@@ -31,11 +31,6 @@ import java.util.Random;
 public class Animal implements  Runnable {
 
     /**
-     * A reference to the model this controller must work with
-     */
-    private WorldModel theModel;
-
-    /**
      * Integer representation of the speed of the animal
      */
     private Integer speed;
@@ -153,14 +148,13 @@ public class Animal implements  Runnable {
     GraphicsContext gc = World.gc;
     Canvas canvas = gc.getCanvas();
 
-    public List<Food> eat(List<Food> foodList) {
+    public void eat(List<Food> foodList) {
         for (Food food : foodList) {
             if (((this.getAnimalLocX() + 10) > food.getFoodLocX()) &&  ((this.getAnimalLocX() - 10) < food.getFoodLocX()) && ((this.getAnimalLocX() + 10) > food.getFoodLocY()) &&  ((this.getAnimalLocX() - 10) < food.getFoodLocY())) {
                 this.energy += 1000;
                 foodList.remove(food);
             }
         }
-        return foodList;
     }
 
     @Override
@@ -173,7 +167,6 @@ public class Animal implements  Runnable {
                 e.printStackTrace();
             }
             this.Move((int) canvas.getWidth(), (int) canvas.getHeight());
-            this.eat(this.theModel.getFoodList());
             //gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight() );
             //gc.fillOval(this.getAnimalLocX(), this.getAnimalLocY(), 30, 30);
 

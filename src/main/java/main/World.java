@@ -120,6 +120,10 @@ public class World {
                 gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
                 for (Animal animal : animals){
                     if (animal.getEnergy() <= 0){
+                        Animal animal1 = animal;
+                        Animal animal2 = animal;
+                        //animals.add(animal1);
+                        //animals.add(animal2);
                         animals.remove(animal);
                     }
                 }
