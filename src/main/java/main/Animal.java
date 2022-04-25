@@ -22,6 +22,7 @@ import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -146,6 +147,15 @@ public class Animal implements  Runnable {
     }
     GraphicsContext gc = World.gc;
     Canvas canvas = gc.getCanvas();
+
+    public void eat(List<Food> foodList) {
+        for (Food food : foodList) {
+            if (((this.getAnimalLocX() + 10) > food.getFoodLocX()) &&  ((this.getAnimalLocX() - 10) < food.getFoodLocX()) && ((this.getAnimalLocX() + 10) > food.getFoodLocY()) &&  ((this.getAnimalLocX() - 10) < food.getFoodLocY())) {
+                this.energy += 1000;
+                foodList.remove(food);
+            }
+        }
+    }
 
     @Override
     public synchronized void run() {
