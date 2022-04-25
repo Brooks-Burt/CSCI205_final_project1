@@ -85,17 +85,16 @@ public class World {
     public void setModel(WorldModel theModel) {
         this.theModel = theModel;
 
-
         this.btnGenerate.setOnAction(event -> {
             System.out.println("Press Button");
             Animal animal = this.theModel.generateAnimal((int) this.canvas.getWidth(), (int)this.canvas.getHeight());
             animals.add(animal);
             Thread myThread = new Thread(animal);
             threads.add(myThread);
+            this.theModel.generateFood(5, (int)this.canvas.getWidth(), (int)this.canvas.getHeight());
         });
 
         this.btnStart.setOnAction(event -> {
-            this.theModel.generateFood(5, (int)this.canvas.getWidth(), (int)this.canvas.getHeight());
 
 
             Runnable theUpdater = new UpdateWorld();
@@ -116,7 +115,7 @@ public class World {
     private class UpdateWorld implements Runnable{
 
         private void UpdatePositions(List<Animal> animals) throws InterruptedException {
-            gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+            //gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
             while (animals.size() > 0) {
                 gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
                 for (Animal animal : animals){

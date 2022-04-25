@@ -37,12 +37,10 @@ public class Food {
     private double foodLocY;
 
 
-
     public Food(double foodLocX, double foodLocY) {
         this.foodLocX = foodLocX;
         this.foodLocY = foodLocY;
     }
-
 
     public double getFoodLocX() {
         return foodLocX;

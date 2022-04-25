@@ -44,6 +44,10 @@ public class WorldModel {
         return foodList;
     }
 
+    public void setFoodList(List<Food> foodList) {
+        this.foodList = foodList;
+    }
+
     /**
      * Generate an animal at a random location
      *
