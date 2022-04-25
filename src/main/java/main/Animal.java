@@ -148,13 +148,14 @@ public class Animal implements  Runnable {
     GraphicsContext gc = World.gc;
     Canvas canvas = gc.getCanvas();
 
-    public void eat(List<Food> foodList) {
+    public List<Food> eat(List<Food> foodList) {
         for (Food food : foodList) {
             if (((this.getAnimalLocX() + 10) > food.getFoodLocX()) &&  ((this.getAnimalLocX() - 10) < food.getFoodLocX()) && ((this.getAnimalLocX() + 10) > food.getFoodLocY()) &&  ((this.getAnimalLocX() - 10) < food.getFoodLocY())) {
                 this.energy += 1000;
                 foodList.remove(food);
             }
         }
+        return foodList;
     }
 
     @Override
