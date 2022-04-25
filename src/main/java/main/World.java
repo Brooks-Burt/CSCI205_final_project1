@@ -27,7 +27,6 @@ import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
-import javafx.scene.paint.Color;
 import main.model.ParticleSystemModel;
 
 public class World {
@@ -69,7 +68,18 @@ public class World {
 
     public List<Animal> animals = new ArrayList<>();
     public List<Thread> threads = new ArrayList<>();
+    private Runnable UpdateWorld;
 
+    private void UpdatePositions(List<Animal> animals) {
+
+        for (Animal animal : animals){
+
+            gc.fillOval(animal.getAnimalLocX(), animal.getAnimalLocY(), 30, 30);
+
+        }
+        System.out.println("got here!");
+
+    }
 
     public void setModel(WorldModel theModel) {
         this.theModel = theModel;
@@ -77,28 +87,13 @@ public class World {
 
         this.btnGenerate.setOnAction(event -> {
             System.out.println("Press Button");
-
-            /**
-            for (int i = 0; i < 3; i++) {
-                Animal animal = this.theModel.generateAnimal((int) this.canvas.getWidth(), (int)this.canvas.getHeight());
-                Thread thread = new Thread(animal);
-                thread.start();
-            }
-            **/
             Animal animal = this.theModel.generateAnimal((int) this.canvas.getWidth(), (int)this.canvas.getHeight());
             animals.add(animal);
             Thread myThread = new Thread(animal);
             threads.add(myThread);
-
-            //generate food
-
-
         });
 
         this.btnStart.setOnAction(event -> {
-            this.theModel.generateFood(5, (int)this.canvas.getWidth(), (int)this.canvas.getHeight());
-
-
             Runnable theUpdater = new UpdateWorld();
             Thread update = new Thread(theUpdater);
 
@@ -108,30 +103,26 @@ public class World {
             update.start();
 
 
-
-
-        });
+            });
 
 
     }
 
-
     private class UpdateWorld implements Runnable{
 
         private void UpdatePositions(List<Animal> animals) throws InterruptedException {
-            while (true) {
+            gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+            while (animals.size() > 0) {
                 gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-
-                gc.setFill(Color.GREEN);
-                for (Food food : theModel.getFoodList()) {
-
-                    gc.fillRect(food.getFoodLocX(), food.getFoodLocY(), 5, 5);
+                for (Animal animal : animals){
+                    if (animal.getEnergy() <= 0){
+                        animals.remove(animal);
+                    }
                 }
-
-                gc.setFill(Color.BLACK);
                 for (Animal animal : animals) {
                     gc.fillOval(animal.getAnimalLocX(), animal.getAnimalLocY(), 20, 20);
                     //Thread.sleep(25);
+
 
                 }
                 //gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
