@@ -126,6 +126,14 @@ public class Animal implements  Runnable {
         return animalLocY;
     }
 
+    public void setAnimalLocX(double animalLocX) {
+        this.animalLocX = animalLocX;
+    }
+
+    public void setAnimalLocY(double animalLocY) {
+        this.animalLocY = animalLocY;
+    }
+
     public Double getReproductionRate() {
         return reproductionRate;
     }
@@ -158,6 +166,7 @@ public class Animal implements  Runnable {
             Food food = iterator.next();
             if (Math.abs(this.getAnimalLocY() - food.getFoodLocY()) < 20 && Math.abs(this.getAnimalLocX() - food.getFoodLocX()) < 20) {
                 this.energy += 1000;
+                World.reproduce(canvas, this.getAnimalLocX(), this.getAnimalLocY());
                 iterator.remove();
             }
         }

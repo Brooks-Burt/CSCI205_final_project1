@@ -22,20 +22,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
-import main.model.ParticleSystemModel;
 
 public class World {
 
     /**
      * A reference to the model this controller must work with
      */
-    private WorldModel theModel;
+    private static WorldModel theModel;
 
     /**
      * The Graphics Context of the canvas
@@ -68,7 +66,7 @@ public class World {
     }
 
     public static List<Animal> animals = new ArrayList<>();
-    public List<Thread> threads = new ArrayList<>();
+    public static List<Thread> threads = new ArrayList<>();
     private Runnable UpdateWorld;
 
     private void UpdatePositions(List<Animal> animals) {
@@ -109,6 +107,16 @@ public class World {
             });
 
 
+    }
+
+    public static void reproduce(Canvas canvas, Double animalLocX, Double animalLocY) {
+        Animal animal = theModel.generateAnimal((int) canvas.getWidth(), (int) canvas.getHeight());
+        animals.add(animal);
+        animal.setAnimalLocX(animalLocX+20);
+        animal.setAnimalLocY(animalLocY+20);
+        Thread myThread = new Thread(animal);
+        threads.add(myThread);
+        myThread.start();
     }
 
 
