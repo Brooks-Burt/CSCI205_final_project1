@@ -138,14 +138,7 @@ public class Animal implements  Runnable {
         return speed;
     }
 
-    public static void main(String[] args) {
-        Animal fish = new Animal(2, 0.5, 50.0, 50.0);
-//        randMove(fish);
-//        randMove(fish);
-//        randMove(fish);
-//        randMove(fish);
-        AnimalDies(fish);
-    }
+
     GraphicsContext gc = World.gc;
     Canvas canvas = gc.getCanvas();
 

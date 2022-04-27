@@ -20,6 +20,7 @@
 package main;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -41,7 +42,7 @@ public class WorldModel {
     private static List<Food> foodList = new ArrayList<>();
 
     public static List<Food> getFoodList() {
-        return foodList;
+        return Collections.synchronizedList(foodList);
     }
 
     public void setFoodList(List<Food> foodList) {
@@ -80,7 +81,7 @@ public class WorldModel {
             int randomIntX = rand.nextInt(maxWidth);
             int randomIntY = rand.nextInt(maxHeight);
             Food newFood = new Food(randomIntX, randomIntY);
-            foodList.add(newFood);
+            getFoodList().add(newFood);
         }
     }
 }

@@ -27,6 +27,7 @@ import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.control.Slider;
 import javafx.scene.paint.Color;
 import main.model.ParticleSystemModel;
 
@@ -58,10 +59,19 @@ public class World {
     public Canvas canvas;
 
     @FXML
+    private Slider slider;
+
+    @FXML
+    private Button resetBtn;
+
+
+    @FXML
     void initialize() {
         assert btnGenerate != null : "fx:id=\"btnGenerate\" was not injected: check your FXML file 'world.fxml'.";
         assert btnStart != null : "fx:id=\"btnStart\" was not injected: check your FXML file 'world.fxml'.";
         assert canvas != null : "fx:id=\"canvas\" was not injected: check your FXML file 'world.fxml'.";
+        assert resetBtn != null : "fx:id=\"resetBtn\" was not injected: check your FXML file 'world.fxml'.";
+        assert slider != null : "fx:id=\"slider\" was not injected: check your FXML file 'world.fxml'.";
 
         this.gc = canvas.getGraphicsContext2D();
 
@@ -69,29 +79,21 @@ public class World {
 
     public static List<Animal> animals = new ArrayList<>();
     public List<Thread> threads = new ArrayList<>();
-    private Runnable UpdateWorld;
 
-    private void UpdatePositions(List<Animal> animals) {
-
-        for (Animal animal : animals){
-
-            gc.fillOval(animal.getAnimalLocX(), animal.getAnimalLocY(), 30, 30);
-
-        }
-        System.out.println("got here!");
-
-    }
 
     public void setModel(WorldModel theModel) {
         this.theModel = theModel;
 
         this.btnGenerate.setOnAction(event -> {
-            System.out.println("Press Button");
-            Animal animal = this.theModel.generateAnimal((int) this.canvas.getWidth(), (int)this.canvas.getHeight());
-            animals.add(animal);
-            Thread myThread = new Thread(animal);
-            threads.add(myThread);
-            this.theModel.generateFood(5, (int)this.canvas.getWidth(), (int)this.canvas.getHeight());
+            int numGen = (int) this.slider.getValue();
+            System.out.println(numGen);
+            for(int x=0; x < numGen; x++) {
+                Animal animal = this.theModel.generateAnimal((int) this.canvas.getWidth(), (int)this.canvas.getHeight());
+                animals.add(animal);
+                Thread myThread = new Thread(animal);
+                threads.add(myThread);
+                this.theModel.generateFood(15, (int)this.canvas.getWidth(), (int)this.canvas.getHeight());
+            }
         });
 
         this.btnStart.setOnAction(event -> {
@@ -107,6 +109,8 @@ public class World {
 
 
             });
+
+
 
 
     }
@@ -128,10 +132,12 @@ public class World {
                     }
                 }*/
                 gc.setFill(Color.GREEN);
+
                 for (Food food : theModel.getFoodList()) {
 
                     gc.fillRect(food.getFoodLocX(), food.getFoodLocY(), 5, 5);
                 }
+
                 gc.setFill(Color.BLACK);
 
                 for (Animal animal : animals) {
