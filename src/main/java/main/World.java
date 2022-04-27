@@ -67,7 +67,7 @@ public class World {
 
     }
 
-    public List<Animal> animals = new ArrayList<>();
+    public static List<Animal> animals = new ArrayList<>();
     public List<Thread> threads = new ArrayList<>();
     private Runnable UpdateWorld;
 
@@ -118,15 +118,15 @@ public class World {
             //gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
             while (animals.size() > 0) {
                 gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-                for (Animal animal : animals){
+                /*for (Animal animal : animals){
                     if (animal.getEnergy() <= 0){
-                        Animal animal1 = animal;
-                        Animal animal2 = animal;
+                        //Animal animal1 = animal;
+                        //Animal animal2 = animal;
                         //animals.add(animal1);
                         //animals.add(animal2);
                         animals.remove(animal);
                     }
-                }
+                }*/
                 gc.setFill(Color.GREEN);
                 for (Food food : theModel.getFoodList()) {
 
@@ -141,6 +141,7 @@ public class World {
                 }
                 //gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
                 Thread.sleep(10);
+                gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
             }
         }
 

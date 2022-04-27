@@ -22,6 +22,7 @@ import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
@@ -149,13 +150,23 @@ public class Animal implements  Runnable {
     Canvas canvas = gc.getCanvas();
 
     public void eat() {
+
         List<Food> foodList = WorldModel.getFoodList();
-        for (Food food : foodList) {
+        Iterator<Food> iterator = foodList.iterator();
+
+        while (iterator.hasNext()) {
+            Food food = iterator.next();
+            if (Math.abs(this.getAnimalLocY() - food.getFoodLocY()) < 20 && Math.abs(this.getAnimalLocX() - food.getFoodLocX()) < 20) {
+                this.energy += 1000;
+                iterator.remove();
+            }
+        }
+        /*for (Food food : foodList) {
             if (Math.abs(this.getAnimalLocY() - food.getFoodLocY()) < 20 && Math.abs(this.getAnimalLocX() - food.getFoodLocX()) < 20) {
                 this.energy += 1000;
                 foodList.remove(food);
             }
-        }
+        }*/
     }
 
     @Override
@@ -174,5 +185,6 @@ public class Animal implements  Runnable {
 
 
         }
+        World.animals.remove(this);
     }
 }
