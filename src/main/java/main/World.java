@@ -36,7 +36,7 @@ public class World {
     /**
      * A reference to the model this controller must work with
      */
-    private WorldModel theModel;
+    private static WorldModel theModel;
 
     /**
      * The Graphics Context of the canvas
@@ -78,8 +78,19 @@ public class World {
     }
 
     public static List<Animal> animals = new ArrayList<>();
-    public List<Thread> threads = new ArrayList<>();
+    public static List<Thread> threads = new ArrayList<>();
+    private Runnable UpdateWorld;
 
+    private void UpdatePositions(List<Animal> animals) {
+
+        for (Animal animal : animals){
+
+            gc.fillOval(animal.getAnimalLocX(), animal.getAnimalLocY(), 30, 30);
+
+        }
+        System.out.println("got here!");
+
+    }
 
     public void setModel(WorldModel theModel) {
         this.theModel = theModel;
@@ -111,8 +122,16 @@ public class World {
             });
 
 
+    }
 
-
+    public static void reproduce(Canvas canvas, Double animalLocX, Double animalLocY) {
+        Animal animal = theModel.generateAnimal((int) canvas.getWidth(), (int) canvas.getHeight());
+        animals.add(animal);
+        animal.setAnimalLocX(animalLocX+20);
+        animal.setAnimalLocY(animalLocY+20);
+        Thread myThread = new Thread(animal);
+        threads.add(myThread);
+        myThread.start();
     }
 
 
@@ -132,12 +151,10 @@ public class World {
                     }
                 }*/
                 gc.setFill(Color.GREEN);
-
                 for (Food food : theModel.getFoodList()) {
 
                     gc.fillRect(food.getFoodLocX(), food.getFoodLocY(), 5, 5);
                 }
-
                 gc.setFill(Color.BLACK);
 
                 for (Animal animal : animals) {
