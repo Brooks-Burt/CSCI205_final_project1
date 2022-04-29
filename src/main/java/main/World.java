@@ -104,8 +104,6 @@ public class World {
             predators.add(predator);
             Thread predatorThread = new Thread(predator);
             threads.add(predatorThread);
-
-            //btnGenerate.setVisible(false); //Makes the generate not visible anymore after it has been clicked
         });
 
         this.btnStart.setOnAction(event -> {
@@ -150,8 +148,8 @@ public class World {
 
         private WorldModel theModel;
 
-        private void UpdatePositions() throws InterruptedException {
-            while (animals.size() > 0 || predators.size() > 0) {
+        private void UpdatePositions(List<Animal> animals) throws InterruptedException {
+            while (animals.size() > 0 && predators.size() > 0) {
                 gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
                 gc.setFill(Color.GREEN);
                 for (Food food : theModel.getFoodList()) {
@@ -169,7 +167,6 @@ public class World {
                     gc.fillOval(predator.getAnimalLocX(), predator.getAnimalLocY(), 30, 30);
                 }
                 Thread.sleep(10);
-                gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight()); //clears at the end
 
 
             }
@@ -179,7 +176,7 @@ public class World {
         @Override
         public synchronized void run() {
             try {
-                UpdatePositions();
+                UpdatePositions(animals);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
