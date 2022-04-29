@@ -75,7 +75,7 @@ public class World {
 
     private Runnable UpdateWorld;
 
-    private void UpdatePositions(List<Animal> animals) {
+    private void UpdatePositions() {
 
         for (Animal animal : animals){
 

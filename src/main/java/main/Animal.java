@@ -93,7 +93,7 @@ public class Animal implements  Runnable {
 
     public void Move(int width, int height) {
         Random rand = new Random();
-        System.out.println(this.getAnimalLocX() + ", " + this.getAnimalLocY());
+        //System.out.println(this.getAnimalLocX() + ", " + this.getAnimalLocY());
         double randomIntX = (double) rand.nextInt(3) - 1;
         double randomIntY = (double) rand.nextInt(3) - 1;
         if ((this.getAnimalLocX() + (randomIntX*speed)) < 0 || (this.getAnimalLocX() + (randomIntX*speed)) > width) {
