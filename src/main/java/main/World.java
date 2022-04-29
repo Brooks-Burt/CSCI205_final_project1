@@ -22,14 +22,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
-import javafx.scene.control.Slider;
 import javafx.scene.paint.Color;
-import main.model.ParticleSystemModel;
 
 /**
  * A simple class to manage the GUI and its interactions with the various objects of the simulation
@@ -62,26 +59,23 @@ public class World {
     public Canvas canvas;
 
     @FXML
-    private Slider slider;
-
-    @FXML
-    private Button resetBtn;
-
-
-    @FXML
     void initialize() {
         assert btnGenerate != null : "fx:id=\"btnGenerate\" was not injected: check your FXML file 'world.fxml'.";
         assert btnStart != null : "fx:id=\"btnStart\" was not injected: check your FXML file 'world.fxml'.";
         assert canvas != null : "fx:id=\"canvas\" was not injected: check your FXML file 'world.fxml'.";
-        assert resetBtn != null : "fx:id=\"resetBtn\" was not injected: check your FXML file 'world.fxml'.";
-        assert slider != null : "fx:id=\"slider\" was not injected: check your FXML file 'world.fxml'.";
 
         this.gc = canvas.getGraphicsContext2D();
 
     }
 
+    public static List<Animal> getAnimals() {
+        return animals;
+    }
+
     public static List<Animal> animals = new ArrayList<>();
     public static List<Thread> threads = new ArrayList<>();
+    public static List<Predator> predators = new ArrayList<>();
+
     private Runnable UpdateWorld;
 
     private void UpdatePositions(List<Animal> animals) {
@@ -99,15 +93,20 @@ public class World {
         this.theModel = theModel;
 
         this.btnGenerate.setOnAction(event -> {
-            int numGen = (int) this.slider.getValue();
-            System.out.println(numGen);
-            for(int x=0; x < numGen; x++) {
-                Animal animal = this.theModel.generateAnimal((int) this.canvas.getWidth(), (int)this.canvas.getHeight());
-                animals.add(animal);
-                Thread myThread = new Thread(animal);
-                threads.add(myThread);
-                this.theModel.generateFood(15, (int)this.canvas.getWidth(), (int)this.canvas.getHeight());
-            }
+            System.out.println("Press Button");
+            Animal animal = this.theModel.generateAnimal((int) this.canvas.getWidth(), (int)this.canvas.getHeight());
+            animals.add(animal);
+            Thread myThread = new Thread(animal);
+            threads.add(myThread);
+
+
+            this.theModel.generateFood(5, (int)this.canvas.getWidth(), (int)this.canvas.getHeight());
+
+
+            Predator predator = this.theModel.generatePredator((int) this.canvas.getWidth(), (int)this.canvas.getHeight());
+            predators.add(predator);
+            Thread predatorThread = new Thread(predator);
+            threads.add(predatorThread);
         });
 
         this.btnStart.setOnAction(event -> {
@@ -119,9 +118,9 @@ public class World {
             for (Thread thread : threads){
                 thread.start();
             }
+
+
             update.start();
-
-
             });
 
 
@@ -137,22 +136,24 @@ public class World {
         myThread.start();
     }
 
+    public static void reproducePredator(Canvas canvas, Double animalLocX, Double animalLocY) {
+        Predator predator = theModel.generatePredator((int) canvas.getWidth(), (int) canvas.getHeight());
+        predators.add(predator);
+        predator.setAnimalLocX(animalLocX+20);
+        predator.setAnimalLocY(animalLocY+20);
+        Thread myThread = new Thread(predator);
+        threads.add(myThread);
+        myThread.start();
+    }
+
 
     private class UpdateWorld implements Runnable{
 
+        private WorldModel theModel;
+
         private void UpdatePositions(List<Animal> animals) throws InterruptedException {
-            //gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-            while (animals.size() > 0) {
+            while (animals.size() > 0 && predators.size() > 0) {
                 gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-                /*for (Animal animal : animals){
-                    if (animal.getEnergy() <= 0){
-                        //Animal animal1 = animal;
-                        //Animal animal2 = animal;
-                        //animals.add(animal1);
-                        //animals.add(animal2);
-                        animals.remove(animal);
-                    }
-                }*/
                 gc.setFill(Color.GREEN);
                 for (Food food : theModel.getFoodList()) {
 
@@ -162,12 +163,15 @@ public class World {
 
                 for (Animal animal : animals) {
                     gc.fillOval(animal.getAnimalLocX(), animal.getAnimalLocY(), 20, 20);
-                    //Thread.sleep(25);
-
                 }
-                //gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+
+                gc.setFill(Color.RED);
+                for (Predator predator : predators){
+                    gc.fillOval(predator.getAnimalLocX(), predator.getAnimalLocY(), 30, 30);
+                }
                 Thread.sleep(10);
-                gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+
+
             }
         }
 
