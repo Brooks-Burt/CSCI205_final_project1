@@ -23,6 +23,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * A simple class that encapsulates a food object
+ */
 
 public class Food {
 
@@ -37,15 +40,28 @@ public class Food {
     private double foodLocY;
 
 
+    /**
+     * Constructor method for the food object that records its XY location on the canvas
+     * @param foodLocX - the double representation of the X location
+     * @param foodLocY - the double representation of the Y location
+     */
     public Food(double foodLocX, double foodLocY) {
         this.foodLocX = foodLocX;
         this.foodLocY = foodLocY;
     }
 
+    /**
+     * Getter method for the food object X lcoation
+     * @return double representation of the X location
+     */
     public double getFoodLocX() {
         return foodLocX;
     }
 
+    /**
+     * Getter method for the food object Y location
+     * @return double representation of the Y location
+     */
     public double getFoodLocY() {
         return foodLocY;
     }

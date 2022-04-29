@@ -28,6 +28,9 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
 
+/**
+ * A simple class to manage the GUI and its interactions with the various objects of the simulation
+ */
 public class World {
 
     /**

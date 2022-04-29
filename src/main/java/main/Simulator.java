@@ -26,14 +26,26 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+/**
+ * A simple class to encapsulate the running of the simulation on the GUI
+ */
 public class Simulator extends Application {
     private World theWorld;
     private WorldModel theWorldModel;
 
+    /**
+     * The main class simply launches the given World model
+     * @param args
+     */
     public static void main(String[] args) {
         launch(args);
     }
 
+    /**
+     * This method takes in a stage and starts it upon the beginning of the simulation allowing it to run
+     * @param primaryStage - the stage object that is set to be run
+     * @throws IOException - an exception for if the stage is not a valid stage object
+     */
     @Override
     public void start(Stage primaryStage) throws IOException {
         this.theWorldModel = new WorldModel();

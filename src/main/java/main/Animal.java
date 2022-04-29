@@ -44,7 +44,7 @@ public class Animal implements  Runnable {
     /**
      * Integer representation of the energy of the animal
      */
-    protected double energy;
+    double energy;
 
     /**
      * Double value that holds the X location of the animal within space
@@ -134,6 +134,10 @@ public class Animal implements  Runnable {
         this.animalLocY = animalLocY;
     }
 
+    public Double getReproductionRate() {
+        return reproductionRate;
+    }
+
     public double getEnergy() {
         return energy;
     }
@@ -142,10 +146,7 @@ public class Animal implements  Runnable {
         return speed;
     }
 
-    public static void main(String[] args) {
-        Animal fish = new Animal(2, 0.5, 50.0, 50.0);
-        AnimalDies(fish);
-    }
+
     GraphicsContext gc = World.gc;
     Canvas canvas = gc.getCanvas();
 
