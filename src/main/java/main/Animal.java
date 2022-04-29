@@ -44,7 +44,7 @@ public class Animal implements  Runnable {
     /**
      * Integer representation of the energy of the animal
      */
-    private double energy;
+    double energy;
 
     /**
      * Double value that holds the X location of the animal within space
@@ -163,12 +163,6 @@ public class Animal implements  Runnable {
                 iterator.remove();
             }
         }
-        /*for (Food food : foodList) {
-            if (Math.abs(this.getAnimalLocY() - food.getFoodLocY()) < 20 && Math.abs(this.getAnimalLocX() - food.getFoodLocX()) < 20) {
-                this.energy += 1000;
-                foodList.remove(food);
-            }
-        }*/
     }
 
     @Override
@@ -181,8 +175,6 @@ public class Animal implements  Runnable {
                 e.printStackTrace();
             }
             this.Move((int) canvas.getWidth(), (int) canvas.getHeight());
-            //gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight() );
-            //gc.fillOval(this.getAnimalLocX(), this.getAnimalLocY(), 30, 30);
             this.eat();
 
 

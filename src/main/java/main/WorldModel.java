@@ -84,5 +84,15 @@ public class WorldModel {
             getFoodList().add(newFood);
         }
     }
+
+    public static Predator generatePredator(int maxWidth, int maxHeight) {
+        System.out.println("Generate Predator");
+        double x = (double) rng.nextInt(maxWidth);
+        double y = (double) rng.nextInt(maxHeight);
+        Predator predator = new Predator(5, .5, x, y);
+        return predator;
+    }
+
+
 }
 
