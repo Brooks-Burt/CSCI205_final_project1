@@ -68,6 +68,14 @@ public class WorldModel {
         return animal;
     }
 
+    public static Predator generatePredator(int maxWidth, int maxHeight) {
+        System.out.println("Generate Predator");
+        double x = (double) rng.nextInt(maxWidth);
+        double y = (double) rng.nextInt(maxHeight);
+        Predator predator = new Predator(5, .5, x, y);
+        return predator;
+    }
+
     public void addNewAnimal(double x, double y) {
         Animal animal = new Animal(1, .5, x, y);
 

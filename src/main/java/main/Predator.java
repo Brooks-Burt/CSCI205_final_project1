@@ -18,8 +18,44 @@
  */
 package main;
 
+import java.util.Iterator;
+import java.util.List;
+
 public class Predator extends Animal{
     public Predator(Integer speedVal, Double reproductionRateVal, Double animalLocXVal, Double animalLocYVal) {
         super(speedVal, reproductionRateVal, animalLocXVal, animalLocYVal);
+    }
+
+    @Override
+    public void eat(){
+        List<Animal> animalList = World.getAnimals();
+        Iterator<Animal> iterator = animalList.iterator();
+
+        while (iterator.hasNext()) {
+            Animal animal = iterator.next();
+            if (Math.abs(this.getAnimalLocY() - animal.getAnimalLocY()) < 20 && Math.abs(this.getAnimalLocX() - animal.getAnimalLocX()) < 20) {
+                this.energy += 1000;
+                World.reproducePredator(canvas, this.getAnimalLocX(), this.getAnimalLocY());
+                iterator.remove();
+            }
+        }
+
+    }
+
+    @Override
+    public synchronized void run() {
+        //gc.fillOval(this.getAnimalLocX(), this.getAnimalLocY(), 30, 30);
+        while (this.getEnergy() > 0) {
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            this.Move((int) canvas.getWidth(), (int) canvas.getHeight());
+            this.eat();
+
+
+        }
+        World.predators.remove(this);
     }
 }
