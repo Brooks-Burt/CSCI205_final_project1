@@ -91,6 +91,13 @@ public class Animal implements  Runnable {
         }
     }
 
+    /**
+     * This method takes the current animal and moves it in a random direction with the overall distance in that direction
+     * being determined by the speed of the animal, the method then reduces the overall energy of the animal by the absolute value of the total movement
+     * If the movement would bring the animal outside of the given bounds of the canvas, it simply will bounce of the walls in the opposite direction back onto the canvas
+     * @param width - the maximum X coordinate of the canvas
+     * @param height - the maximum Y coordinate of the canvas
+     */
     public void Move(int width, int height) {
         Random rand = new Random();
         System.out.println(this.getAnimalLocX() + ", " + this.getAnimalLocY());
@@ -109,39 +116,75 @@ public class Animal implements  Runnable {
         this.energy = this.getEnergy() - (Math.abs(this.getSpeed()*randomIntX) + Math.abs(this.getSpeed()*randomIntY));
     }
 
+    /**
+     * Method that will use machine learning to develop optimal movement styles for the animal so that it survives the longest
+     */
     public void SmartMove() {
         //TODO: Define Smarter movement method based off of machine learning techniques
     }
 
+    /**
+     * Method takes in an animal once it has run out of energy and nullifies its attributes so that it is no longer visible
+     * @param animal
+     * @return
+     */
     public static Animal AnimalDies(Animal animal) {
         animal = null;
         return animal;
     }
 
+    /**
+     * Getter for the animal X location
+     * @return the X location of the animal
+     */
     public double getAnimalLocX() {
         return animalLocX;
     }
 
+    /**
+     * Getter for the animal Y location
+     * @return the Y location of the animal
+     */
     public double getAnimalLocY() {
         return animalLocY;
     }
 
+    /**
+     * Setter method for the X location of the animal
+     * @param animalLocX a double representing the X location of the animal
+     */
     public void setAnimalLocX(double animalLocX) {
         this.animalLocX = animalLocX;
     }
 
+    /**
+     * Setter method for the X location of the animal
+     * @param animalLocY a double representing the X location of the animal
+     */
     public void setAnimalLocY(double animalLocY) {
         this.animalLocY = animalLocY;
     }
 
+    /**
+     * Getter method for the reproduction rate of the animal
+     * @return a double representing the reproduction rate of the animal
+     */
     public Double getReproductionRate() {
         return reproductionRate;
     }
 
+    /**
+     * Getter method for the energy of the animal
+     * @return double representing the total remaining energy of the animal
+     */
     public double getEnergy() {
         return energy;
     }
 
+    /**
+     * Getter method for the speed of the animal
+     * @return integer representation of the speed of the animal
+     */
     public Integer getSpeed() {
         return speed;
     }
@@ -150,6 +193,12 @@ public class Animal implements  Runnable {
     GraphicsContext gc = World.gc;
     Canvas canvas = gc.getCanvas();
 
+    /**
+     * This method takes in the foodList object and creates an iterator for it. The method then iterates through all of the food items for
+     * the given animal and checks to see if any of the are close to the animal location (within 20), if the animal is close to some food,
+     * then it eats the food by gaining 1000 energy food, it calls the reproduce method with its current location, then removes the food item
+     * from the iterator. This works to reproduce an animal everytime an animal eats
+     */
     public void eat() {
 
         List<Food> foodList = WorldModel.getFoodList();
@@ -171,6 +220,10 @@ public class Animal implements  Runnable {
         }*/
     }
 
+    /**
+     * Run method for an animal thread. It checks that thread continues to run so long as it has a positive energy value. Moving each and checking
+     * whether it is able to eat after each movement. When it runs out of energy the given thread object is removed
+     */
     @Override
     public synchronized void run() {
         //gc.fillOval(this.getAnimalLocX(), this.getAnimalLocY(), 30, 30);

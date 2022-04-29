@@ -31,6 +31,9 @@ import javafx.scene.control.Slider;
 import javafx.scene.paint.Color;
 import main.model.ParticleSystemModel;
 
+/**
+ * A simple class to manage the GUI and its interactions with the various objects of the simulation
+ */
 public class World {
 
     /**
