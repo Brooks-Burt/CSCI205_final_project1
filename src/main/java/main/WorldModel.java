@@ -19,14 +19,13 @@
 
 package main;
 
+import javafx.scene.canvas.Canvas;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-/**
- * A simple class to encapsulate the objects contained in the simulation and the methods needed to run them
- */
 public class WorldModel {
 
     /**
@@ -38,32 +37,41 @@ public class WorldModel {
      * A shared random number generator
      */
     private static final Random rng = new Random();
+    public static List<Animal> animals = new ArrayList<>();
 
     /**
      * A list of food to be generated
      */
     private static List<Food> foodList = new ArrayList<>();
 
-    /**
-     * Getter method for the food in the list
-     * @return the list object of every food item
-     */
     public static List<Food> getFoodList() {
         return Collections.synchronizedList(foodList);
     }
 
-    /**
-     * Setter method for the foodlist object
-     * @param foodList - the new food list that we want to set
-     */
+    public static void reproduce(Canvas canvas, Double animalLocX, Double animalLocY) {
+        Animal animal = generateAnimal((int) canvas.getWidth(), (int) canvas.getHeight());
+        animals.add(animal);
+        animal.setAnimalLocX(animalLocX+20);
+        animal.setAnimalLocY(animalLocY+20);
+        Thread myThread = new Thread(animal);
+        World.threads.add(myThread);
+        myThread.start();
+    }
+
+    public static void reproducePredator(Canvas canvas, Double animalLocX, Double animalLocY) {
+        Predator predator = generatePredator((int) canvas.getWidth(), (int) canvas.getHeight());
+        World.predators.add(predator);
+        predator.setAnimalLocX(animalLocX+20);
+        predator.setAnimalLocY(animalLocY+20);
+        Thread myThread = new Thread(predator);
+        World.threads.add(myThread);
+        myThread.start();
+    }
+
     public void setFoodList(List<Food> foodList) {
         this.foodList = foodList;
     }
 
-    /**
-     * Method that removes a food item from the food list if it is contained in the list
-     * @param food the food object to be removed from the list
-     */
     public static void removeFood(Food food){
         if (foodList.contains(food)){
             foodList.remove(food);
@@ -84,22 +92,11 @@ public class WorldModel {
         return animal;
     }
 
-    /**
-     * Method to create a new animal at a given location
-      * @param x - the x location of the animal
-     * @param y - the y location of the animal
-     */
     public void addNewAnimal(double x, double y) {
         Animal animal = new Animal(1, .5, x, y);
 
     }
 
-    /**
-     * Method to generate num amount of food at random locations across the canvas
-     * @param num - the total amount of food to be create
-     * @param maxWidth - the maximum X coordinate for the food
-     * @param maxHeight - the maximum Y coordinate for the food
-     */
     public void generateFood(int num, int maxWidth, int maxHeight) {
         Random rand = new Random();
 
@@ -111,12 +108,6 @@ public class WorldModel {
         }
     }
 
-    /**
-     * Method to generate a predator on the canvas
-     * @param maxWidth - the maximum X coordinate that the predator can have
-     * @param maxHeight - the maximum Y coordinate that the predator can have
-     * @return the predator object
-     */
     public static Predator generatePredator(int maxWidth, int maxHeight) {
         System.out.println("Generate Predator");
         double x = (double) rng.nextInt(maxWidth);
