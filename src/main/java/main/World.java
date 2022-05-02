@@ -26,6 +26,7 @@ import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.control.Slider;
 import javafx.scene.paint.Color;
 
 /**
@@ -59,6 +60,13 @@ public class World {
     public Canvas canvas;
 
     @FXML
+    private Slider slider;
+
+    @FXML
+    private Button resetBtn;
+
+
+    @FXML
     void initialize() {
         assert btnGenerate != null : "fx:id=\"btnGenerate\" was not injected: check your FXML file 'world.fxml'.";
         assert btnStart != null : "fx:id=\"btnStart\" was not injected: check your FXML file 'world.fxml'.";
@@ -76,37 +84,27 @@ public class World {
     public static List<Thread> threads = new ArrayList<>();
     public static List<Predator> predators = new ArrayList<>();
 
-    private Runnable UpdateWorld;
-
-    private void UpdatePositions() {
-
-        for (Animal animal : animals){
-
-            gc.fillOval(animal.getAnimalLocX(), animal.getAnimalLocY(), 30, 30);
-
-        }
-        System.out.println("got here!");
-
-    }
-
     public void setModel(WorldModel theModel) {
         this.theModel = theModel;
 
         this.btnGenerate.setOnAction(event -> {
-            System.out.println("Press Button");
-            Animal animal = this.theModel.generateAnimal((int) this.canvas.getWidth(), (int)this.canvas.getHeight());
-            animals.add(animal);
-            Thread myThread = new Thread(animal);
-            threads.add(myThread);
+            int numGen = (int) this.slider.getValue();
+            System.out.println(numGen);
+            for(int x=0; x < numGen; x++) {
+                Animal animal = this.theModel.generateAnimal((int) this.canvas.getWidth(), (int)this.canvas.getHeight());
+                animals.add(animal);
+                Thread myThread = new Thread(animal);
+                threads.add(myThread);
+                this.theModel.generateFood(15, (int)this.canvas.getWidth(), (int)this.canvas.getHeight());
+                Predator predator = this.theModel.generatePredator((int) this.canvas.getWidth(), (int)this.canvas.getHeight());
+                predators.add(predator);
+                Thread predatorThread = new Thread(predator);
+                threads.add(predatorThread);
+            }
 
 
-            this.theModel.generateFood(5, (int)this.canvas.getWidth(), (int)this.canvas.getHeight());
 
 
-            Predator predator = this.theModel.generatePredator((int) this.canvas.getWidth(), (int)this.canvas.getHeight());
-            predators.add(predator);
-            Thread predatorThread = new Thread(predator);
-            threads.add(predatorThread);
 
             //btnGenerate.setVisible(false); //Makes the generate not visible anymore after it has been clicked
         });
