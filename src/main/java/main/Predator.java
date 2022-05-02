@@ -21,7 +21,18 @@ package main;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * A simple class to encapsulate a predator object
+ */
 public class Predator extends Animal{
+    /**
+     * Constructor method for the preedator class. It takes in all of the attribtutes and calls a super method from the
+     * animal constructor
+     * @param speedVal integer representation of the predator's speed
+     * @param reproductionRateVal - double representation of the animals chance of reproducing
+     * @param animalLocXVal -double representation of the animals X location
+     * @param animalLocYVal - double representation of the animals Y location
+     */
     public Predator(Integer speedVal, Double reproductionRateVal, Double animalLocXVal, Double animalLocYVal) {
         super(speedVal, reproductionRateVal, animalLocXVal, animalLocYVal);
     }

@@ -74,6 +74,7 @@ public class Animal implements  Runnable {
     /**
      * This method acts on an animal object and randomly adjust its locations values based on some random
      * number scaled by its overall speed value
+     * @param animal - the animal object onto which the method acts upon
      */
     public void randMove(Animal animal) {
         Random rand = new Random();
@@ -91,6 +92,13 @@ public class Animal implements  Runnable {
         }
     }
 
+    /**
+     * The movement method that takes in the height and width of the canvas and then moves the given animal in a random
+     * direction scaled by the speed of the animal. If the movement would bring the animal outside of bounds then it
+     * simply bounces off the wall back onto the canvas. The energy is then adjusted by the absolute value of the movement
+     * @param width - the width of the canvas
+     * @param height - the height of the canvas
+     */
     public void Move(int width, int height) {
         Random rand = new Random();
         //System.out.println(this.getAnimalLocX() + ", " + this.getAnimalLocY());
@@ -109,10 +117,18 @@ public class Animal implements  Runnable {
         this.energy = this.getEnergy() - (Math.abs(this.getSpeed()*randomIntX) + Math.abs(this.getSpeed()*randomIntY));
     }
 
+    /**
+     * A future method to use machine learning techniques to develop a smarter way for animals to move to survive longer
+     */
     public void SmartMove() {
         //TODO: Define Smarter movement method based off of machine learning techniques
     }
 
+    /**
+     * Method to nullify an animal when it dies
+     * @param animal the dead animal
+     * @return the animal that died
+     */
     public static Animal AnimalDies(Animal animal) {
         animal = null;
         return animal;
@@ -150,6 +166,11 @@ public class Animal implements  Runnable {
     GraphicsContext gc = World.gc;
     Canvas canvas = gc.getCanvas();
 
+    /**
+     * The eat method creates an iterator for the food list for the given animal and then runs through the food checking
+     * if qny food item is within 20 of the animal's location. If so, then the animal gains the energy, the food is remvoed,
+     * and the animal reproduces
+     */
     public void eat() {
 
         List<Food> foodList = WorldModel.getFoodList();
@@ -165,6 +186,11 @@ public class Animal implements  Runnable {
         }
     }
 
+    /**
+     * Runnable method for every animal thread object. The method checks that the animal's energy is greater than 0, then it
+     * continually moves the animal, calling the eat method, until the animal runs out of energy at which point it is
+     * removed from the animal collection
+     */
     @Override
     public synchronized void run() {
         //gc.fillOval(this.getAnimalLocX(), this.getAnimalLocY(), 30, 30);
