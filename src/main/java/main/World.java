@@ -57,30 +57,31 @@ public class World {
     private Button btnStart;
 
     @FXML
-    public Canvas canvas;
+    private Canvas canvas;
 
     @FXML
-    private Slider slider;
+    private Slider sliderPred;
 
     @FXML
-    private Button resetBtn;
-
+    private Slider sliderPrey;
 
     @FXML
     void initialize() {
         assert btnGenerate != null : "fx:id=\"btnGenerate\" was not injected: check your FXML file 'world.fxml'.";
         assert btnStart != null : "fx:id=\"btnStart\" was not injected: check your FXML file 'world.fxml'.";
         assert canvas != null : "fx:id=\"canvas\" was not injected: check your FXML file 'world.fxml'.";
+        assert sliderPred != null : "fx:id=\"sliderPred\" was not injected: check your FXML file 'world.fxml'.";
+        assert sliderPrey != null : "fx:id=\"sliderPrey\" was not injected: check your FXML file 'world.fxml'.";
 
         this.gc = canvas.getGraphicsContext2D();
 
     }
 
     public static List<Animal> getAnimals() {
-        return animals;
+        return WorldModel.animals;
     }
 
-    public static List<Animal> animals = new ArrayList<>();
+
     public static List<Thread> threads = new ArrayList<>();
     public static List<Predator> predators = new ArrayList<>();
 
@@ -88,29 +89,31 @@ public class World {
         this.theModel = theModel;
 
         this.btnGenerate.setOnAction(event -> {
-            int numGen = (int) this.slider.getValue();
-            System.out.println(numGen);
-            for(int x=0; x < numGen; x++) {
+            int numGenPrey = (int) this.sliderPrey.getValue();
+            for(int x=0; x < numGenPrey; x++) {
                 Animal animal = this.theModel.generateAnimal((int) this.canvas.getWidth(), (int)this.canvas.getHeight());
-                animals.add(animal);
+                WorldModel.animals.add(animal);
                 Thread myThread = new Thread(animal);
                 threads.add(myThread);
                 this.theModel.generateFood(15, (int)this.canvas.getWidth(), (int)this.canvas.getHeight());
-                Predator predator = this.theModel.generatePredator((int) this.canvas.getWidth(), (int)this.canvas.getHeight());
+
+            }
+
+            int numGenPred = (int) this.sliderPred.getValue();
+
+            for(int x=0; x < numGenPred; x++) {
+                Predator predator = this.theModel.generatePredator((int) this.canvas.getWidth(), (int) this.canvas.getHeight());
                 predators.add(predator);
                 Thread predatorThread = new Thread(predator);
                 threads.add(predatorThread);
+
             }
-
-
-
 
 
             //btnGenerate.setVisible(false); //Makes the generate not visible anymore after it has been clicked
         });
 
         this.btnStart.setOnAction(event -> {
-
 
             Runnable theUpdater = new UpdateWorld();
             Thread update = new Thread(theUpdater);
@@ -119,31 +122,9 @@ public class World {
                 thread.start();
             }
 
-
             update.start();
             });
 
-
-    }
-
-    public static void reproduce(Canvas canvas, Double animalLocX, Double animalLocY) {
-        Animal animal = theModel.generateAnimal((int) canvas.getWidth(), (int) canvas.getHeight());
-        animals.add(animal);
-        animal.setAnimalLocX(animalLocX+20);
-        animal.setAnimalLocY(animalLocY+20);
-        Thread myThread = new Thread(animal);
-        threads.add(myThread);
-        myThread.start();
-    }
-
-    public static void reproducePredator(Canvas canvas, Double animalLocX, Double animalLocY) {
-        Predator predator = theModel.generatePredator((int) canvas.getWidth(), (int) canvas.getHeight());
-        predators.add(predator);
-        predator.setAnimalLocX(animalLocX+20);
-        predator.setAnimalLocY(animalLocY+20);
-        Thread myThread = new Thread(predator);
-        threads.add(myThread);
-        myThread.start();
     }
 
 
@@ -152,7 +133,7 @@ public class World {
         private WorldModel theModel;
 
         private void UpdatePositions() throws InterruptedException {
-            while (animals.size() > 0 || predators.size() > 0) {
+            while (WorldModel.animals.size() > 0 || predators.size() > 0) {
                 gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
                 gc.setFill(Color.GREEN);
                 for (Food food : theModel.getFoodList()) {
@@ -161,7 +142,7 @@ public class World {
                 }
                 gc.setFill(Color.BLACK);
 
-                for (Animal animal : animals) {
+                for (Animal animal : WorldModel.animals) {
                     gc.fillOval(animal.getAnimalLocX(), animal.getAnimalLocY(), 20, 20);
                 }
 

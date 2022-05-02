@@ -19,6 +19,8 @@
 
 package main;
 
+import javafx.scene.canvas.Canvas;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -35,6 +37,7 @@ public class WorldModel {
      * A shared random number generator
      */
     private static final Random rng = new Random();
+    public static List<Animal> animals = new ArrayList<>();
 
     /**
      * A list of food to be generated
@@ -43,6 +46,26 @@ public class WorldModel {
 
     public static List<Food> getFoodList() {
         return Collections.synchronizedList(foodList);
+    }
+
+    public static void reproduce(Canvas canvas, Double animalLocX, Double animalLocY) {
+        Animal animal = generateAnimal((int) canvas.getWidth(), (int) canvas.getHeight());
+        animals.add(animal);
+        animal.setAnimalLocX(animalLocX+20);
+        animal.setAnimalLocY(animalLocY+20);
+        Thread myThread = new Thread(animal);
+        World.threads.add(myThread);
+        myThread.start();
+    }
+
+    public static void reproducePredator(Canvas canvas, Double animalLocX, Double animalLocY) {
+        Predator predator = generatePredator((int) canvas.getWidth(), (int) canvas.getHeight());
+        World.predators.add(predator);
+        predator.setAnimalLocX(animalLocX+20);
+        predator.setAnimalLocY(animalLocY+20);
+        Thread myThread = new Thread(predator);
+        World.threads.add(myThread);
+        myThread.start();
     }
 
     public void setFoodList(List<Food> foodList) {

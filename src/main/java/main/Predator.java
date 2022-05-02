@@ -35,7 +35,7 @@ public class Predator extends Animal{
             Animal animal = iterator.next();
             if (Math.abs(this.getAnimalLocY() - animal.getAnimalLocY()) < 20 && Math.abs(this.getAnimalLocX() - animal.getAnimalLocX()) < 20) {
                 this.energy += 1000;
-                World.reproducePredator(canvas, this.getAnimalLocX(), this.getAnimalLocY());
+                WorldModel.reproducePredator(canvas, this.getAnimalLocX(), this.getAnimalLocY());
                 iterator.remove();
             }
         }
@@ -44,7 +44,6 @@ public class Predator extends Animal{
 
     @Override
     public synchronized void run() {
-        //gc.fillOval(this.getAnimalLocX(), this.getAnimalLocY(), 30, 30);
         while (this.getEnergy() > 0) {
             try {
                 Thread.sleep(10);

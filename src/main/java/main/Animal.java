@@ -18,7 +18,6 @@
  */
 package main;
 
-import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 
@@ -45,6 +44,8 @@ public class Animal implements  Runnable {
      * Integer representation of the energy of the animal
      */
     double energy;
+
+
 
     /**
      * Double value that holds the X location of the animal within space
@@ -159,7 +160,7 @@ public class Animal implements  Runnable {
             Food food = iterator.next();
             if (Math.abs(this.getAnimalLocY() - food.getFoodLocY()) < 20 && Math.abs(this.getAnimalLocX() - food.getFoodLocX()) < 20) {
                 this.energy += 1000;
-                World.reproduce(canvas, this.getAnimalLocX(), this.getAnimalLocY());
+                WorldModel.reproduce(canvas, this.getAnimalLocX(), this.getAnimalLocY());
                 iterator.remove();
             }
         }
@@ -179,6 +180,6 @@ public class Animal implements  Runnable {
 
 
         }
-        World.animals.remove(this);
+        WorldModel.animals.remove(this);
     }
 }
