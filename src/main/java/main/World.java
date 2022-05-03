@@ -44,27 +44,51 @@ public class World {
      */
     public static GraphicsContext gc;
 
+    /**
+     * Resource bundle object
+     */
     @FXML
     private ResourceBundle resources;
 
+    /**
+     * The XML url object
+     */
     @FXML
     private URL location;
 
+    /**
+     * The button encapsulation
+     */
     @FXML
     private Button btnGenerate;
 
+    /**
+     * The start button encapsulation
+     */
     @FXML
     private Button btnStart;
 
+    /**
+     * The canvas encapsulation
+     */
     @FXML
     private Canvas canvas;
 
+    /**
+     * The predator slider counter
+     */
     @FXML
     private Slider sliderPred;
 
+    /**
+     * The prey slider counter
+     */
     @FXML
     private Slider sliderPrey;
 
+    /**
+     * This method initializes the GUI with all of the button ands slider across the canvas
+     */
     @FXML
     void initialize() {
         assert btnGenerate != null : "fx:id=\"btnGenerate\" was not injected: check your FXML file 'world.fxml'.";
@@ -77,14 +101,30 @@ public class World {
 
     }
 
+    /**
+     * Static getter method for the animal list
+     * @return the animal list
+     */
     public static List<Animal> getAnimals() {
         return WorldModel.animals;
     }
 
 
+    /**
+     * A list o threads storing the animals and predators
+     */
     public static List<Thread> threads = new ArrayList<>();
+
+    /**
+     * A list used to store all of the predator objects
+     */
     public static List<Predator> predators = new ArrayList<>();
 
+    /**
+     * Setter method for the model. Uses the two button objects to take in their number counters and gneerate animals
+     * based on their settings
+     * @param theModel takes in the world model object
+     */
     public void setModel(WorldModel theModel) {
         this.theModel = theModel;
 
@@ -128,10 +168,20 @@ public class World {
     }
 
 
+    /**
+     * A simple class to encapsulate the updating of the objects on the GUI
+     */
     private class UpdateWorld implements Runnable{
 
+        /**
+         * World model object
+         */
         private WorldModel theModel;
 
+        /**
+         * Method to take in the postitions of every animal, predator, and food object to put their positions onto the GUI
+         * @throws InterruptedException
+         */
         private void UpdatePositions() throws InterruptedException {
             while (WorldModel.animals.size() > 0 || predators.size() > 0) {
                 gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
@@ -158,6 +208,9 @@ public class World {
         }
 
 
+        /**
+         * Run object for the thread updater that continually runs the updatePositions method if at all possible
+         */
         @Override
         public synchronized void run() {
             try {

@@ -37,6 +37,10 @@ public class Predator extends Animal{
         super(speedVal, reproductionRateVal, animalLocXVal, animalLocYVal);
     }
 
+    /**
+     * Method takes in the given predator and iterates through all of the possible animals in the list and then checks to see if
+     * they are close to the predator, if they are the predator gains energy, reproduces, and then removes the animal from the list
+     */
     @Override
     public void eat(){
         List<Animal> animalList = World.getAnimals();
@@ -53,6 +57,10 @@ public class Predator extends Animal{
 
     }
 
+    /**
+     * The run method runs as long as the energy is greater than 0, moving the animal and calling the eat method after every eat, then
+     * when the predator runs out of energy is removed from the list
+     */
     @Override
     public synchronized void run() {
         while (this.getEnergy() > 0) {
