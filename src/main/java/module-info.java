@@ -5,7 +5,6 @@ module csci205_final_project{
         requires javafx.graphics;
         requires javafx.controls;
         requires javafx.fxml;
-    requires org.junit.jupiter.api;
-    exports main;
+        exports main;
         opens main to javafx.fxml;
         }
