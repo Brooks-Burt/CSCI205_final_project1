@@ -6,6 +6,7 @@ class AnimalTest {
 
     @Test
     void move() {
+        System.out.println("Hello!");
     }
 
     @Test
