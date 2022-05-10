@@ -123,15 +123,7 @@ public class WorldModel {
         return animal;
     }
 
-    /**
-     * This method intakes two doubles representing the coordinates of the animal and creates a new animal at those coordinates
-     * @param x - double representing the X location of the animal
-     * @param y - double representing the Y location of the animal
-     */
-    public void addNewAnimal(double x, double y) {
-        Animal animal = new Animal(1, .5, x, y);
 
-    }
 
     /**
      * This method takes a number of food items to be generates as well as the size of the canvas onto which they will appear and

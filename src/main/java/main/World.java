@@ -101,6 +101,10 @@ public class World {
 
     }
 
+    public Canvas getCanvas() {
+        return canvas;
+    }
+
     /**
      * Static getter method for the animal list
      * @return the animal list
